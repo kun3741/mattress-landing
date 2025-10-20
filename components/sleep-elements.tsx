@@ -20,9 +20,9 @@ export const FloatingSleepElements = () => {
 export const SleepDivider = ({ className = "" }: { className?: string }) => (
   <div className={`flex justify-center items-center py-8 ${className}`}>
     <div className="flex items-center gap-4">
-      <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent animate-sleep-pulse"></div>
-      <div className="w-2 h-2 rounded-full bg-primary/40 animate-twinkle"></div>
-      <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent animate-sleep-pulse"></div>
+      <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
+      <div className="w-2 h-2 rounded-full bg-primary/30"></div>
+      <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
     </div>
   </div>
 )
@@ -36,7 +36,7 @@ export const SleepPattern = ({ className = "" }: { className?: string }) => (
                        radial-gradient(circle at 75% 25%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
                        radial-gradient(circle at 25% 75%, rgba(147, 51, 234, 0.1) 0%, transparent 50%)`,
       backgroundSize: '400px 400px',
-      animation: 'gentle-sway 20s ease-in-out infinite'
+      // animation removed for static pattern
     }} />
   </div>
 )
@@ -51,16 +51,14 @@ export const SleepSpinner = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => 
 
   return (
     <div className={`${sizeClasses[size]} flex items-center justify-center`}>
-      <div className="animate-peaceful-breathing">
-        <div className="w-3 h-3 rounded-full bg-primary/70 animate-twinkle" />
-      </div>
+      <div className="w-3 h-3 rounded-full bg-primary/70" />
     </div>
   )
 }
 
 // Animated sleep quote or tip
 export const SleepTip = ({ tip, className = "" }: { tip: string; className?: string }) => (
-  <div className={`bg-peaceful-gradient text-white rounded-lg p-4 shadow-dream animate-dream-float ${className}`}>
+  <div className={`bg-peaceful-gradient text-white rounded-lg p-4 shadow-dream ${className}`}>
     <div className="flex items-start gap-3">
       <div className="w-5 h-5 rounded-full bg-white/40" />
       <div>
@@ -81,11 +79,7 @@ export const SleepRating = ({ rating, maxRating = 5, className = "" }: {
     {Array.from({ length: maxRating }).map((_, index) => (
       <div
         key={index}
-        className={`size-3 rounded-full transition-all duration-300 ${
-          index < rating 
-            ? 'bg-yellow-400 animate-twinkle' 
-            : 'bg-gray-300 opacity-50'
-        }`}
+        className={`size-3 rounded-full transition-all duration-300 ${index < rating ? 'bg-yellow-400' : 'bg-gray-300 opacity-50'}`}
         style={{ animationDelay: `${index * 0.1}s` }}
       />
     ))}
@@ -108,10 +102,7 @@ export const SleepProgress = ({
       <span className="text-sm text-gray-500">{Math.round(progress)}%</span>
     </div>
     <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-      <div 
-        className="h-full bg-sleep-gradient transition-all duration-700 ease-out animate-gentle-sway"
-        style={{ width: `${progress}%` }}
-      />
+      <div className="h-full bg-sleep-gradient transition-all duration-700 ease-out" style={{ width: `${progress}%` }} />
     </div>
   </div>
 )

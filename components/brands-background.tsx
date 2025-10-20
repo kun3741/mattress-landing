@@ -29,20 +29,6 @@ export function BrandsBackground() {
   return (
     <>
       <style>{`
-        @keyframes float-slow {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.04; }
-          25% { transform: translate(30px, -30px) rotate(5deg); opacity: 0.06; }
-          50% { transform: translate(-20px, 20px) rotate(-5deg); opacity: 0.04; }
-          75% { transform: translate(40px, 10px) rotate(3deg); opacity: 0.06; }
-        }
-
-        @keyframes float-slow-reverse {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.03; }
-          25% { transform: translate(-40px, 20px) rotate(-5deg); opacity: 0.05; }
-          50% { transform: translate(30px, -30px) rotate(5deg); opacity: 0.03; }
-          75% { transform: translate(-20px, -20px) rotate(-3deg); opacity: 0.05; }
-        }
-
         .brands-bg {
           position: fixed;
           top: 0;
@@ -57,7 +43,7 @@ export function BrandsBackground() {
 
         .brand-logo {
           position: absolute;
-          opacity: 0.04;
+          opacity: 0.035; /* slightly lower and static */
           filter: grayscale(100%) brightness(0.8);
           pointer-events: none;
           transition: filter 0.3s ease;
@@ -73,8 +59,7 @@ export function BrandsBackground() {
               left: `${(index * 17) % 80 + 5}%`,
               width: `${90 + (index % 4) * 10}px`,
               height: `${60 + (index % 4) * 8}px`,
-              animation: `${index % 2 === 0 ? 'float-slow' : 'float-slow-reverse'} ${22 + (index % 6) * 2}s ease-in-out infinite`,
-              animationDelay: `${(index % 5) * 1.3}s`,
+              // animation removed to stop floating
             }}
           >
             <Image

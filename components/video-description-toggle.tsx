@@ -91,7 +91,7 @@ export function VideoDescriptionToggle() {
                           className="w-full h-full object-contain bg-black"
                           playsInline
                           preload="metadata"
-                          poster="/placeholder.jpg"
+                          poster="/placevideo.jpg"
                           aria-label="Вступне відео про програму підбору матраців"
                           onError={() => setVideoError(true)}
                           onPlay={() => setIsPlaying(true)}

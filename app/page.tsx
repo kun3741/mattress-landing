@@ -24,6 +24,7 @@ import {
 import { CheckCircle2, Clock, Users, Factory, Phone, Mail, MapPin, Menu } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
+import { SheetClose } from "@/components/ui/sheet"
 
 export default function Home() {
   return (
@@ -120,29 +121,27 @@ function HomePage() {
 
             <Sheet>
               <SheetTrigger asChild className="md:hidden">
-                <ButtonHover>
-                  <Button variant="ghost" size="sm">
-                    <Menu className="h-5 w-5" />
-                  </Button>
-                </ButtonHover>
+                <Button variant="ghost" size="sm" aria-label="Відкрити меню">
+                  <Menu className="h-5 w-5" />
+                </Button>
               </SheetTrigger>
-              <SheetContent>
+              <SheetContent aria-label="Мобільне меню">
                 <nav className="flex flex-col gap-4 mt-8">
-                  <ButtonHover>
+                  <SheetClose asChild>
                     <Button variant="ghost" className="justify-start" onClick={() => openInfoDialog("benefits")}>
                       Переваги
                     </Button>
-                  </ButtonHover>
-                  <ButtonHover>
+                  </SheetClose>
+                  <SheetClose asChild>
                     <Button variant="ghost" className="justify-start" onClick={() => openInfoDialog("factories")}>
                       Партнери
                     </Button>
-                  </ButtonHover>
-                  <ButtonHover>
+                  </SheetClose>
+                  <SheetClose asChild>
                     <Button variant="ghost" className="justify-start" onClick={() => openInfoDialog("contacts")}>
                       Контакти
                     </Button>
-                  </ButtonHover>
+                  </SheetClose>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -338,7 +337,7 @@ function HomePage() {
         onOpenChange={closeInfoDialog}
         title="Наші партнери"
         content={
-          <div className="not-prose px-6 md:px-8">
+          <div className="px-6 md:px-8">
             <p className="text-muted-foreground">
               Ми співпрацюємо з провідними фабриками та брендами матраців — наші партнери допомагають пропонувати найкращі рішення для будь-якого бюджету.
             </p>

@@ -15,16 +15,20 @@ export function InfoDialog({ open, onOpenChange, title, content }: InfoDialogPro
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
-        className="sm:max-w-[800px]"
+        className="sm:max-w-[800px] max-h-[85vh] p-0"
         aria-describedby="info-dialog-description"
       >
-        <DialogHeader>
-          <DialogTitle className="text-2xl">{title}</DialogTitle>
-          <p id="info-dialog-description" className="sr-only">
-            {title} - інформаційне вікно з деталями
-          </p>
-        </DialogHeader>
-        <div className="prose prose-sm max-w-none">{content}</div>
+        <div className="flex flex-col max-h-[85vh]">
+          <DialogHeader className="px-6 pt-6">
+            <DialogTitle className="text-2xl">{title}</DialogTitle>
+            <p id="info-dialog-description" className="sr-only">
+              {title} - інформаційне вікно з деталями
+            </p>
+          </DialogHeader>
+          <div className="prose prose-sm max-w-none px-6 pb-6 overflow-y-auto">
+            {content}
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   )

@@ -6,8 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { 
   ScrollAnimation, 
   WaveAnimation, 
-  LogoHover, 
-  FloatingAnimation 
+  LogoHover 
 } from "@/components/css-animations"
 import Image from "next/image"
 
@@ -150,25 +149,23 @@ export function PartnersSection() {
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeUp" delay={100}>
           <div className="text-center mb-8 md:mb-12">
-            <FloatingAnimation>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Наші партнери</h2>
-            </FloatingAnimation>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Наші партнери</h2>
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
               Перевірені фабрики-партнери, з якими ми працюємо
             </p>
           </div>
         </ScrollAnimation>
         <div className="px-2 sm:px-4 md:px-6">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
             {partners.map((factory, index) => {
               const displayName = getDisplayName(factory)
               return (
                 <WaveAnimation key={index} index={index}>
-                  <Card className="border-gray-100 hover:shadow-lg transition-all duration-300 group h-full bg-gradient-to-br from-slate-50 to-slate-100 hover:from-slate-100 hover:to-slate-150" aria-label={displayName}>
-                    <CardContent className="p-5 md:p-6 flex flex-col items-center justify-center h-32">
+                  <Card className="border-gray-100 hover:shadow-md transition-all duration-200 group h-full bg-gradient-to-br from-slate-50 to-slate-100" aria-label={displayName}>
+                    <CardContent className="p-2 md:p-3 flex flex-col items-center justify-center gap-1 h-auto min-h-20 md:min-h-24">
                       {factory.logo ? (
                         <LogoHover>
-                          <div className="relative w-20 h-12 mb-2 opacity-70 group-hover:opacity-100 transition-opacity">
+                          <div className="relative w-12 h-8 sm:w-14 sm:h-9 md:w-16 md:h-10 mb-1 sm:mb-1.5 opacity-70 group-hover:opacity-100 transition-opacity">
                             <Image
                               src={factory.logo}
                               alt={displayName}
@@ -182,11 +179,11 @@ export function PartnersSection() {
                           </div>
                         </LogoHover>
                       ) : (
-                        <div className="w-20 h-12 mb-2 bg-slate-200 rounded flex items-center justify-center">
+                        <div className="w-12 h-8 sm:w-14 sm:h-9 md:w-16 md:h-10 mb-1 sm:mb-1.5 bg-slate-200 rounded flex items-center justify-center">
                           <span className="text-slate-400 text-xs">LOGO</span>
                         </div>
                       )}
-                      <p className="text-sm font-medium text-gray-700 text-center line-clamp-2 group-hover:text-gray-900 transition-colors">
+                      <p className="text-[15px] sm:text-[13px] md:text-[14px] leading-tight font-medium text-gray-800 text-center line-clamp-2 group-hover:text-gray-900 transition-colors">
                         {displayName}
                       </p>
                     </CardContent>

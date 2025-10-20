@@ -198,7 +198,7 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto mx-4" aria-describedby="survey-dialog-description">
+      <DialogContent className="w-[min(480px,calc(100vw-2rem))] sm:max-w-[460px] max-h-[85vh] overflow-y-auto p-4 sm:p-6" aria-describedby="survey-dialog-description">
         <DialogHeader>
           <DialogTitle className="text-xl md:text-2xl text-center">
             {step === "contact" ? "Ваші контактні дані" : step === "survey" ? "Опитування" : "Дякуємо!"}
@@ -213,18 +213,18 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
         </DialogHeader>
 
         {step === "contact" && (
-          <form onSubmit={handleContactSubmit} className="space-y-4">
+          <form onSubmit={handleContactSubmit} className="space-y-4 text-left">
             <div>
               <Label htmlFor="name">Ім'я</Label>
-              <Input id="name" value={userData.name} onChange={(e) => setUserData({ ...userData, name: e.target.value })} required />
+              <Input id="name" className="w-full" value={userData.name} onChange={(e) => setUserData({ ...userData, name: e.target.value })} required />
             </div>
             <div>
               <Label htmlFor="phone">Телефон</Label>
-              <Input id="phone" value={userData.phone} onChange={(e) => setUserData({ ...userData, phone: e.target.value })} required />
+              <Input id="phone" className="w-full" value={userData.phone} onChange={(e) => setUserData({ ...userData, phone: e.target.value })} required />
             </div>
             <div>
               <Label htmlFor="city">Місто/Селище</Label>
-              <Input id="city" value={userData.city} onChange={(e) => setUserData({ ...userData, city: e.target.value })} required />
+              <Input id="city" className="w-full" value={userData.city} onChange={(e) => setUserData({ ...userData, city: e.target.value })} required />
             </div>
             <Button type="submit" className="w-full">Почати опитування</Button>
           </form>
@@ -237,7 +237,7 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
             </div>
 
             <div>
-              <p className="font-medium mb-3">{currentQuestion.question}</p>
+              <p className="font-medium mb-3 text-left">{currentQuestion.question}</p>
               {currentQuestion.type === "radio" && (
                 <RadioGroup
                   value={answers[currentQuestion.id] || ""}
