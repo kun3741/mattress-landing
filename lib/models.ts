@@ -1,0 +1,30 @@
+import { ObjectId } from 'mongodb'
+
+export interface SurveyQuestion {
+  _id?: ObjectId
+  question_id: string
+  question_text: string
+  question_type: 'single' | 'multiple' | 'text' | 'number' | 'select' | 'radio'
+  options?: string[]
+  next_question_logic?: Record<string, any>
+  order_index: number
+  required?: boolean
+  created_at?: Date
+  updated_at?: Date
+}
+
+export interface SurveyResponse {
+  _id?: ObjectId
+  name: string
+  phone: string
+  city: string
+  answers: Record<string, any>
+  created_at?: Date
+}
+
+export interface SiteContent {
+  _id?: ObjectId
+  key: string
+  value: any
+  updated_at?: Date
+}
