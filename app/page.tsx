@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { SurveyModal } from "@/components/survey-modal"
@@ -48,6 +48,13 @@ function HomePage() {
   const cta = useContentSection('cta')
   const factories = useContentSection('factories')
 
+  // Handle survey opening from video section
+  React.useEffect(() => {
+    const handleOpenSurvey = () => setSurveyOpen(true)
+    window.addEventListener('openSurvey', handleOpenSurvey)
+    return () => window.removeEventListener('openSurvey', handleOpenSurvey)
+  }, [])
+
   // Icon mapping for benefits
   const benefitIcons = [Clock, CheckCircle2, Factory, Users]
 
@@ -74,7 +81,7 @@ function HomePage() {
   }
 
   return (
-    <GradientAnimation className="min-h-screen relative">
+    <GradientAnimation className="min-h-screen relative luxury-gradient">
       {/* Background brands icons */}
       <BrandsBackground />
 
@@ -154,7 +161,7 @@ function HomePage() {
         <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-8">
             <ScrollAnimation animation="fadeUp" delay={100}>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-balance leading-tight">
-                {hero?.title || "Знайдіть ідеальний матрац за 5 хвилин"} ✨
+                {hero?.title || "Ідеальний підбір матрацу за 5хв"} ✨
               </h2>
             </ScrollAnimation>
             
@@ -163,29 +170,13 @@ function HomePage() {
                 {hero?.subtitle || "Професійний алгоритмічний підбір матрацу з урахуванням ваших індивідуальних особливостей."}
               </p>
             </ScrollAnimation>
-            
-            <ScrollAnimation animation="scale" delay={300}>
-              <ButtonHover>
-                <Button
-                  size="lg"
-                  className="text-base md:text-lg px-6 py-5 md:px-8 md:py-6 h-auto w-full sm:w-auto shadow-lg animate-mattress-bounce"
-                  onClick={() => setSurveyOpen(true)}
-                >
-                  {hero?.ctaButton || "Пройти тест і отримати підбір матрацу"} 🛏️
-                </Button>
-              </ButtonHover>
-            </ScrollAnimation>
-            
-            <ScrollAnimation animation="fadeUp" delay={400}>
-              <p className="text-xs md:text-sm text-muted-foreground">Безкоштовна консультація • Без зобов'язань</p>
-            </ScrollAnimation>
           </div>
         </section>
 
       {/* Sleep divider */}
       <SleepDivider />
 
-      {/* Video Section */}
+      {/* Video Section - Now first after hero */}
       <VideoDescriptionToggle />
 
       {/* Sleep divider */}
@@ -230,7 +221,7 @@ function HomePage() {
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-12 md:py-16">
         <ScrollAnimation animation="scale" delay={100}>
-          <div className="max-w-4xl mx-auto bg-gradient-to-r from-primary/10 via-purple-100/50 to-pink-100/50 rounded-xl md:rounded-2xl p-6 md:p-8 lg:p-12 text-center space-y-4 md:space-y-6 shadow-lg">
+          <div className="max-w-4xl mx-auto luxury-border rounded-xl md:rounded-2xl p-6 md:p-8 lg:p-12 text-center space-y-4 md:space-y-6 premium-shadow bg-white/90 backdrop-blur-sm">
             <ScrollAnimation animation="fadeUp" delay={200}>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
                 {cta?.title || "Готові знайти свій ідеальний матрац?"} 🌙
@@ -245,7 +236,7 @@ function HomePage() {
               <ButtonHover>
                 <Button
                   size="lg"
-                  className="text-base md:text-lg px-6 py-5 md:px-8 md:py-6 h-auto w-full sm:w-auto shadow-lg animate-mattress-bounce"
+                  className="text-base md:text-lg px-6 py-5 md:px-8 md:py-6 h-auto w-full sm:w-auto premium-shadow gold-accent text-white font-semibold animate-mattress-bounce hover:opacity-90 transition-opacity"
                   onClick={() => setSurveyOpen(true)}
                 >
                   Розпочати підбір зараз ✨

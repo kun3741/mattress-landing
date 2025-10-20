@@ -149,23 +149,23 @@ export function PartnersSection() {
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeUp" delay={100}>
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Наші партнери</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Співпраця з фабриками України та Європи</h2>
             <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
               Перевірені фабрики-партнери, з якими ми працюємо
             </p>
           </div>
         </ScrollAnimation>
         <div className="px-2 sm:px-4 md:px-6">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
             {partners.map((factory, index) => {
               const displayName = getDisplayName(factory)
               return (
                 <WaveAnimation key={index} index={index}>
                   <Card className="border-gray-100 hover:shadow-md transition-all duration-200 group h-full bg-gradient-to-br from-slate-50 to-slate-100" aria-label={displayName}>
-                    <CardContent className="p-2 md:p-3 flex flex-col items-center justify-center gap-1 h-auto min-h-20 md:min-h-24">
+                    <CardContent className="p-4 md:p-6 flex flex-col items-center justify-center gap-3 h-auto min-h-32 md:min-h-36">
                       {factory.logo ? (
                         <LogoHover>
-                          <div className="relative w-12 h-8 sm:w-14 sm:h-9 md:w-16 md:h-10 mb-1 sm:mb-1.5 opacity-70 group-hover:opacity-100 transition-opacity">
+                          <div className="relative w-24 h-18 sm:w-28 sm:h-20 md:w-32 md:h-24 lg:w-36 lg:h-28 mb-2 opacity-70 group-hover:opacity-100 transition-opacity">
                             <Image
                               src={factory.logo}
                               alt={displayName}
@@ -179,11 +179,11 @@ export function PartnersSection() {
                           </div>
                         </LogoHover>
                       ) : (
-                        <div className="w-12 h-8 sm:w-14 sm:h-9 md:w-16 md:h-10 mb-1 sm:mb-1.5 bg-slate-200 rounded flex items-center justify-center">
-                          <span className="text-slate-400 text-xs">LOGO</span>
+                        <div className="w-24 h-18 sm:w-28 sm:h-20 md:w-32 md:h-24 lg:w-36 lg:h-28 mb-2 bg-slate-200 rounded flex items-center justify-center">
+                          <span className="text-slate-400 text-sm">LOGO</span>
                         </div>
                       )}
-                      <p className="text-[15px] sm:text-[13px] md:text-[14px] leading-tight font-medium text-gray-800 text-center line-clamp-2 group-hover:text-gray-900 transition-colors">
+                      <p className="text-[14px] sm:text-[13px] md:text-[15px] leading-tight font-medium text-gray-800 text-center line-clamp-2 group-hover:text-gray-900 transition-colors">
                         {displayName}
                       </p>
                     </CardContent>
