@@ -84,6 +84,7 @@ function getDisplayName(factory: Factory) {
 
 export function PartnersSection() {
   const [factories, setFactories] = useState<Factory[]>([])
+  const [content, setContent] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
 
@@ -92,8 +93,9 @@ export function PartnersSection() {
     async function loadFactories() {
       try {
         const response = await fetch('/api/content')
-        const content = await response.json()
-        setFactories(content.factories || [])
+        const contentData = await response.json()
+        setContent(contentData)
+        setFactories(contentData.factories || [])
       } catch (error) {
         console.error('Failed to load factories:', error)
       } finally {
@@ -149,9 +151,11 @@ export function PartnersSection() {
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeUp" delay={100}>
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Співпраця з фабриками України та Європи</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
+              {content?.partners?.title || "Співпраця з фабриками України та Європи"}
+            </h2>
             <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-              Перевірені фабрики-партнери, з якими ми працюємо
+              {content?.partners?.subtitle || "Перевірені фабрики-партнери, з якими ми працюємо"}
             </p>
           </div>
         </ScrollAnimation>

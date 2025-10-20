@@ -44,9 +44,14 @@ function HomePage() {
   const { content, isLoading } = useContent()
   const hero = useContentSection('hero')
   const benefits = useContentSection('benefits')
+  const benefitsSection = useContentSection('benefitsSection')
+  const partners = useContentSection('partners')
   const contacts = useContentSection('contacts')
   const cta = useContentSection('cta')
   const factories = useContentSection('factories')
+  const navigation = useContentSection('navigation')
+  const footer = useContentSection('footer')
+  const infoDialogs = useContentSection('infoDialogs')
 
   // Handle survey opening from video section
   React.useEffect(() => {
@@ -111,17 +116,17 @@ function HomePage() {
             <nav className="hidden md:flex gap-4">
               <ButtonHover>
                 <Button variant="ghost" size="sm" onClick={() => openInfoDialog("benefits")}>
-                  Переваги
+                  {navigation?.benefits || "Переваги"}
                 </Button>
               </ButtonHover>
               <ButtonHover>
                 <Button variant="ghost" size="sm" onClick={() => openInfoDialog("factories")}>
-                  Партнери
+                  {navigation?.partners || "Партнери"}
                 </Button>
               </ButtonHover>
               <ButtonHover>
                 <Button variant="ghost" size="sm" onClick={() => openInfoDialog("contacts")}>
-                  Контакти
+                  {navigation?.contacts || "Контакти"}
                 </Button>
               </ButtonHover>
             </nav>
@@ -136,17 +141,17 @@ function HomePage() {
                 <nav className="flex flex-col gap-4 mt-8">
                   <SheetClose asChild>
                     <Button variant="ghost" className="justify-start" onClick={() => openInfoDialog("benefits")}>
-                      Переваги
+                      {navigation?.benefits || "Переваги"}
                     </Button>
                   </SheetClose>
                   <SheetClose asChild>
                     <Button variant="ghost" className="justify-start" onClick={() => openInfoDialog("factories")}>
-                      Партнери
+                      {navigation?.partners || "Партнери"}
                     </Button>
                   </SheetClose>
                   <SheetClose asChild>
                     <Button variant="ghost" className="justify-start" onClick={() => openInfoDialog("contacts")}>
-                      Контакти
+                      {navigation?.contacts || "Контакти"}
                     </Button>
                   </SheetClose>
                 </nav>
@@ -187,7 +192,7 @@ function HomePage() {
         <div className="max-w-6xl mx-auto">
           <ScrollAnimation animation="fadeUp" delay={100}>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 text-balance px-2">
-              Чому варто довірити підбір нам?
+              {benefitsSection?.title || "Чому варто довірити підбір нам?"}
             </h3>
           </ScrollAnimation>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
@@ -239,7 +244,7 @@ function HomePage() {
                   className="text-base md:text-lg px-6 py-5 md:px-8 md:py-6 h-auto w-full sm:w-auto premium-shadow gold-accent text-white font-semibold animate-mattress-bounce hover:opacity-90 transition-opacity"
                   onClick={() => setSurveyOpen(true)}
                 >
-                  Розпочати підбір зараз ✨
+                  {cta?.button || "Розпочати підбір зараз ✨"}
                 </Button>
               </ButtonHover>
             </ScrollAnimation>
@@ -252,16 +257,16 @@ function HomePage() {
         <ScrollAnimation animation="fadeUp" delay={100}>
           <div className="container mx-auto px-4 py-6 md:py-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-              <p className="text-xs md:text-sm text-muted-foreground">© 2025 Підбір Матрацу. Всі права захищені. 💤</p>
+              <p className="text-xs md:text-sm text-muted-foreground">{footer?.copyright || "© 2025 Підбір Матрацу. Всі права захищені. 💤"}</p>
               <div className="flex gap-4">
                 <ButtonHover>
                   <Button variant="ghost" size="sm" onClick={() => openInfoDialog("contacts")}>
-                    Контакти
+                    {footer?.contacts || "Контакти"}
                   </Button>
                 </ButtonHover>
                 <ButtonHover>
                   <Button variant="ghost" size="sm" onClick={() => openInfoDialog("factories")}>
-                    Партнери
+                    {footer?.partners || "Партнери"}
                   </Button>
                 </ButtonHover>
               </div>
@@ -277,48 +282,29 @@ function HomePage() {
       <InfoDialog
         open={infoDialog.open && infoDialog.type === "benefits"}
         onOpenChange={closeInfoDialog}
-        title="Переваги нашої програми"
+        title={infoDialogs?.benefits?.title || "Переваги нашої програми"}
         content={
           <div className="space-y-4">
-            <div className="space-y-2">
-              <h4 className="font-semibold flex items-center gap-2">
-                <Clock className="w-5 h-5 text-primary" />
-                Економія часу
-              </h4>
-              <p className="text-muted-foreground">
-                Замість того, щоб витрачати дні на відвідування магазинів і вивчення характеристик, ви отримаєте
-                персональні рекомендації за 5 хвилин.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-semibold flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
-                Професійний алгоритм
-              </h4>
-              <p className="text-muted-foreground">
-                Наш алгоритм враховує вашу вагу, зріст, позу сну, проблеми зі здоров'ям та інші важливі фактори для
-                ідеального підбору.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-semibold flex items-center gap-2">
-                <Factory className="w-5 h-5 text-primary" />
-                Широкий вибір
-              </h4>
-              <p className="text-muted-foreground">
-                Співпраця з 12 провідними фабриками дає доступ до сотень моделей матраців різних цінових категорій.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-semibold flex items-center gap-2">
-                <Users className="w-5 h-5 text-primary" />
-                Експертна підтримка
-              </h4>
-              <p className="text-muted-foreground">
-                Після тесту з вами зв'яжеться наш експерт, який відповість на всі питання та допоможе зробити остаточний
-                вибір.
-              </p>
-            </div>
+            {(infoDialogs?.benefits?.content || [
+              { title: "Економія часу", description: "Замість того, щоб витрачати дні на відвідування магазинів і вивчення характеристик, ви отримаєте персональні рекомендації за 5 хвилин." },
+              { title: "Професійний алгоритм", description: "Наш алгоритм враховує вашу вагу, зріст, позу сну, проблеми зі здоров'ям та інші важливі фактори для ідеального підбору." },
+              { title: "Широкий вибір", description: "Співпраця з 12 провідними фабриками дає доступ до сотень моделей матраців різних цінових категорій." },
+              { title: "Експертна підтримка", description: "Після тесту з вами зв'яжеться наш експерт, який відповість на всі питання та допоможе зробити остаточний вибір." }
+            ]).map((item, index) => {
+              const icons = [Clock, CheckCircle2, Factory, Users]
+              const IconComponent = icons[index] || CheckCircle2
+              return (
+                <div key={index} className="space-y-2">
+                  <h4 className="font-semibold flex items-center gap-2">
+                    <IconComponent className="w-5 h-5 text-primary" />
+                    {item.title}
+                  </h4>
+                  <p className="text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+              )
+            })}
           </div>
         }
       />
@@ -326,11 +312,11 @@ function HomePage() {
       <InfoDialog
         open={infoDialog.open && infoDialog.type === "factories"}
         onOpenChange={closeInfoDialog}
-        title="Наші партнери"
+        title={infoDialogs?.partners?.title || "Наші партнери"}
         content={
           <div className="px-6 md:px-8">
             <p className="text-muted-foreground">
-              Ми співпрацюємо з провідними фабриками та брендами матраців — наші партнери допомагають пропонувати найкращі рішення для будь-якого бюджету.
+              {infoDialogs?.partners?.description || "Ми співпрацюємо з провідними фабриками та брендами матраців — наші партнери допомагають пропонувати найкращі рішення для будь-якого бюджету."}
             </p>
             <div className="mt-4">
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
@@ -364,7 +350,7 @@ function HomePage() {
       <InfoDialog
         open={infoDialog.open && infoDialog.type === "contacts"}
         onOpenChange={closeInfoDialog}
-        title="Контактна інформація"
+        title={infoDialogs?.contacts?.title || "Контактна інформація"}
         content={
           <div className="space-y-6">
             <div className="space-y-3">

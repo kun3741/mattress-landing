@@ -1,35 +1,29 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ScrollAnimation } from "@/components/css-animations"
 import { Video, BookOpen } from "lucide-react"
-
-const tarasDescription = `Вітаю мене звати Тарас! 🎬
-
-Я унікальна програма, яка створена для правильного підбору матраців.
-
-Як це працює?
-
-Все дуже просто! Натисніть кнопку підібрати матрац та дайте відповіді на запитання і по Вашим параметрам і бюджету я оберу для Вас ідеальний матрац від кращих виробників України, Туреччини, Італії, Німеччини, Іспанії, Румунії.
-
-Я створений, щоб зберегти Ваш час і допомогти виспатися на всі 100%
-
-Мене створювали люди з величезним досвідом та знаннями. Враховується кожна деталь.
-
-Це унікальна технологія яка допомагає швидко і головне ідеально правильно обрати модель матрацу яка підійде саме Вам, або Вашій дитині чи батькам.
-
-Незалежно від фірми чи країни виробника.
-
-Просто, швидко і головне ефективно!
-
-Тож тисни підібрати матрац , бо я вже готовий працювати.`
 
 export function VideoDescriptionToggle() {
   const [showDescription, setShowDescription] = useState(false)
   const [videoError, setVideoError] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [content, setContent] = useState<any>(null)
   const videoRef = useRef<HTMLVideoElement | null>(null)
+
+  useEffect(() => {
+    async function loadContent() {
+      try {
+        const response = await fetch('/api/content')
+        const contentData = await response.json()
+        setContent(contentData)
+      } catch (error) {
+        console.error('Failed to load content:', error)
+      }
+    }
+    loadContent()
+  }, [])
 
   const handlePlay = () => {
     if (videoRef.current) {
@@ -61,7 +55,7 @@ export function VideoDescriptionToggle() {
           <div className="bg-white/90 backdrop-blur-sm luxury-border rounded-xl md:rounded-2xl premium-shadow p-4 md:p-8 space-y-6 md:space-y-8">
             <ScrollAnimation animation="fadeUp" delay={200}>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-balance">
-                Як працює наша програма підбору?
+                {content?.video?.title || "Як працює наша програма підбору?"}
               </h3>
             </ScrollAnimation>
             
@@ -117,7 +111,25 @@ export function VideoDescriptionToggle() {
                   <ScrollAnimation animation="fadeUp" delay={500}>
                     <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-lg p-6 max-h-96 overflow-y-auto shadow-sm border border-blue-100/50">
                       <div className="space-y-3 text-gray-800 leading-relaxed font-medium text-sm md:text-base">
-                        {tarasDescription.split('\n\n').map((paragraph, index) => (
+                        {(content?.video?.description || `Вітаю мене звати Тарас! 🎬
+
+Я унікальна програма, яка створена для правильного підбору матраців.
+
+Як це працює?
+
+Все дуже просто! Натисніть кнопку підібрати матрац та дайте відповіді на запитання і по Вашим параметрам і бюджету я оберу для Вас ідеальний матрац від кращих виробників України, Туреччини, Італії, Німеччини, Іспанії, Румунії.
+
+Я створений, щоб зберегти Ваш час і допомогти виспатися на всі 100%
+
+Мене створювали люди з величезним досвідом та знаннями. Враховується кожна деталь.
+
+Це унікальна технологія яка допомагає швидко і головне ідеально правильно обрати модель матрацу яка підійде саме Вам, або Вашій дитині чи батькам.
+
+Незалежно від фірми чи країни виробника.
+
+Просто, швидко і головне ефективно!
+
+Тож тисни підібрати матрац , бо я вже готовий працювати.`).split('\n\n').map((paragraph: string, index: number) => (
                           <p key={index} className="text-justify">
                             {paragraph}
                           </p>
@@ -213,7 +225,7 @@ export function VideoDescriptionToggle() {
             <ScrollAnimation animation="fadeUp" delay={500}>
               <div className="text-center space-y-4 pt-4 border-t border-gray-200">
                 <p className="text-lg text-gray-700 font-medium">
-                  Готові розпочати підбір матрацу?
+                  {content?.video?.ctaTitle || "Готові розпочати підбір матрацу?"}
                 </p>
                 <Button
                   size="lg"
@@ -224,9 +236,9 @@ export function VideoDescriptionToggle() {
                     window.dispatchEvent(event)
                   }}
                 >
-                  Підібрати матрац за допомогою програми 🛏️
+                  {content?.video?.ctaButton || "Підібрати матрац за допомогою програми 🛏️"}
                 </Button>
-                <p className="text-sm text-muted-foreground">Безкоштовна консультація • Без зобов'язань</p>
+                <p className="text-sm text-muted-foreground">{content?.video?.ctaSubtitle || "Безкоштовна консультація • Без зобов'язань"}</p>
               </div>
             </ScrollAnimation>
           </div>

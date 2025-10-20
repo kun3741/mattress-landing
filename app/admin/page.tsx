@@ -160,7 +160,7 @@ function AdminPageContent() {
   }
 
   const deleteQuestion = (index: number) => {
-    const updatedQuestions = questions.filter((_, i) => i !== index)
+    const updatedQuestions = questions.filter((_: SurveyQuestion, i: number) => i !== index)
     setQuestions(updatedQuestions)
     setQuestionsDirty(true)
   }
@@ -213,10 +213,12 @@ function AdminPageContent() {
 
       <div className="container mx-auto px-4 py-8">
         <Tabs defaultValue="content" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="content">Контент</TabsTrigger>
             <TabsTrigger value="questions">Питання</TabsTrigger>
             <TabsTrigger value="contacts">Контакти</TabsTrigger>
+            <TabsTrigger value="navigation">Навігація</TabsTrigger>
+            <TabsTrigger value="dialogs">Діалоги</TabsTrigger>
             <TabsTrigger value="seo">SEO</TabsTrigger>
           </TabsList>
 
@@ -228,13 +230,13 @@ function AdminPageContent() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label>Заголовок</Label>
-                  <Input value={content.hero.title} onChange={(e) => updateContent("hero.title", e.target.value)} />
+                  <Input value={content.hero.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("hero.title", e.target.value)} />
                 </div>
                 <div className="space-y-2">
                   <Label>Підзаголовок</Label>
                   <Textarea
                     value={content.hero.subtitle}
-                    onChange={(e) => updateContent("hero.subtitle", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateContent("hero.subtitle", e.target.value)}
                     rows={3}
                   />
                 </div>
@@ -242,7 +244,7 @@ function AdminPageContent() {
                   <Label>Текст кнопки</Label>
                   <Input
                     value={content.hero.ctaButton}
-                    onChange={(e) => updateContent("hero.ctaButton", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("hero.ctaButton", e.target.value)}
                   />
                 </div>
               </CardContent>
@@ -255,15 +257,36 @@ function AdminPageContent() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label>Заголовок секції</Label>
-                  <Input value={content.video.title} onChange={(e) => updateContent("video.title", e.target.value)} />
+                  <Input value={content.video.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("video.title", e.target.value)} />
                 </div>
                 <div className="space-y-2">
                   <Label>URL відео (YouTube, Vimeo тощо)</Label>
                   <Input
                     value={content.video.url}
-                    onChange={(e) => updateContent("video.url", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("video.url", e.target.value)}
                     placeholder="https://www.youtube.com/embed/..."
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label>Опис Тараса</Label>
+                  <Textarea
+                    value={content.video.description}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateContent("video.description", e.target.value)}
+                    rows={8}
+                    placeholder="Опис програми Тараса..."
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Заголовок CTA</Label>
+                  <Input value={content.video.ctaTitle} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("video.ctaTitle", e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Текст кнопки CTA</Label>
+                  <Input value={content.video.ctaButton} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("video.ctaButton", e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Підзаголовок CTA</Label>
+                  <Input value={content.video.ctaSubtitle} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("video.ctaSubtitle", e.target.value)} />
                 </div>
               </CardContent>
             </Card>
@@ -273,13 +296,17 @@ function AdminPageContent() {
                 <CardTitle>Переваги</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {content.benefits.map((benefit, index) => (
+                <div className="space-y-2">
+                  <Label>Заголовок секції переваг</Label>
+                  <Input value={content.benefitsSection.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("benefitsSection.title", e.target.value)} />
+                </div>
+                {content.benefits.map((benefit: any, index: number) => (
                   <div key={index} className="p-4 border rounded-lg space-y-3">
                     <div className="space-y-2">
                       <Label>Заголовок {index + 1}</Label>
                       <Input
                         value={benefit.title}
-                        onChange={(e) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           const newBenefits = [...content.benefits]
                           newBenefits[index].title = e.target.value
                           updateContent("benefits", newBenefits)
@@ -290,7 +317,7 @@ function AdminPageContent() {
                       <Label>Опис {index + 1}</Label>
                       <Textarea
                         value={benefit.description}
-                        onChange={(e) => {
+                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                           const newBenefits = [...content.benefits]
                           newBenefits[index].description = e.target.value
                           updateContent("benefits", newBenefits)
@@ -300,6 +327,46 @@ function AdminPageContent() {
                     </div>
                   </div>
                 ))}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Партнери</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Заголовок секції партнерів</Label>
+                  <Input value={content.partners.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("partners.title", e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Підзаголовок секції партнерів</Label>
+                  <Input value={content.partners.subtitle} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("partners.subtitle", e.target.value)} />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>CTA секція</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Заголовок CTA</Label>
+                  <Input value={content.cta.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("cta.title", e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Підзаголовок CTA</Label>
+                  <Textarea
+                    value={content.cta.subtitle}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateContent("cta.subtitle", e.target.value)}
+                    rows={2}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Текст кнопки CTA</Label>
+                  <Input value={content.cta.button} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("cta.button", e.target.value)} />
+                </div>
               </CardContent>
             </Card>
 
@@ -323,7 +390,7 @@ function AdminPageContent() {
                     <Plus className="mr-2 h-4 w-4" /> Додати питання
                   </Button>
                 </div>
-                {questions.map((question, index) => (
+                {questions.map((question: SurveyQuestion, index: number) => (
                   <div key={question.id} className="p-4 border rounded-lg space-y-3">
                     <div className="flex justify-between items-start">
                       <Label className="text-base font-semibold">Питання {index + 1}</Label>
@@ -336,7 +403,7 @@ function AdminPageContent() {
                         <Label>Текст питання</Label>
                         <Input
                           value={question.question}
-                          onChange={(e) => updateQuestion(index, "question", e.target.value)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "question", e.target.value)}
                         />
                       </div>
                       <div className="space-y-2">
@@ -344,7 +411,7 @@ function AdminPageContent() {
                         <select
                           className="w-full p-2 border rounded-md"
                           value={question.type}
-                          onChange={(e) => updateQuestion(index, "type", e.target.value)}
+                          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => updateQuestion(index, "type", e.target.value)}
                         >
                           <option value="radio">Вибір одного варіанту</option>
                           <option value="select">Випадаючий список</option>
@@ -357,7 +424,7 @@ function AdminPageContent() {
                           id={`req_${index}`}
                           type="checkbox"
                           checked={!!question.required}
-                          onChange={(e) => updateQuestion(index, "required", e.target.checked)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "required", e.target.checked)}
                         />
                         <Label htmlFor={`req_${index}`}>Обов'язкове</Label>
                       </div>
@@ -367,11 +434,11 @@ function AdminPageContent() {
                         <Label>Варіанти відповідей (через кому)</Label>
                         <Textarea
                           value={question.options?.join(", ") || ""}
-                          onChange={(e) =>
+                          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                             updateQuestion(
                               index,
                               "options",
-                              e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
+                              e.target.value.split(",").map((s: string) => s.trim()).filter(Boolean),
                             )
                           }
                           rows={2}
@@ -398,7 +465,7 @@ function AdminPageContent() {
                   <Label>Телефон</Label>
                   <Input
                     value={content.contacts.phone}
-                    onChange={(e) => updateContent("contacts.phone", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("contacts.phone", e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
@@ -406,14 +473,14 @@ function AdminPageContent() {
                   <Input
                     type="email"
                     value={content.contacts.email}
-                    onChange={(e) => updateContent("contacts.email", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("contacts.email", e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Адреса</Label>
                   <Input
                     value={content.contacts.address}
-                    onChange={(e) => updateContent("contacts.address", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("contacts.address", e.target.value)}
                   />
                 </div>
               </CardContent>
@@ -426,12 +493,12 @@ function AdminPageContent() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {content.factories.map((factory, index) => (
+                  {content.factories.map((factory: any, index: number) => (
                     <div key={index} className="p-3 border rounded-lg space-y-2">
                       <Label>Виробник {index + 1}</Label>
                       <Input
                         value={factory.name}
-                        onChange={(e) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           const newFactories = [...content.factories]
                           newFactories[index].name = e.target.value
                           updateContent("factories", newFactories)
@@ -440,7 +507,7 @@ function AdminPageContent() {
                       />
                       <Input
                         value={factory.logo}
-                        onChange={(e) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           const newFactories = [...content.factories]
                           newFactories[index].logo = e.target.value
                           updateContent("factories", newFactories)
@@ -449,6 +516,138 @@ function AdminPageContent() {
                       />
                     </div>
                   ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+              <p className="text-blue-800 text-sm">Після редагування натисніть "Зберегти" у верхній панелі</p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="navigation" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Навігація</CardTitle>
+                <CardDescription>Тексти для навігаційного меню</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Переваги</Label>
+                  <Input value={content.navigation.benefits} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("navigation.benefits", e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Партнери</Label>
+                  <Input value={content.navigation.partners} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("navigation.partners", e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Контакти</Label>
+                  <Input value={content.navigation.contacts} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("navigation.contacts", e.target.value)} />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Футер</CardTitle>
+                <CardDescription>Тексти для футера</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Копірайт</Label>
+                  <Input value={content.footer.copyright} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("footer.copyright", e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Переваги (в футері)</Label>
+                  <Input value={content.footer.benefits} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("footer.benefits", e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Партнери (в футері)</Label>
+                  <Input value={content.footer.partners} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("footer.partners", e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Контакти (в футері)</Label>
+                  <Input value={content.footer.contacts} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("footer.contacts", e.target.value)} />
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+              <p className="text-blue-800 text-sm">Після редагування натисніть "Зберегти" у верхній панелі</p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="dialogs" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Діалог переваг</CardTitle>
+                <CardDescription>Тексти для діалогу з перевагами</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Заголовок діалогу</Label>
+                  <Input value={content.infoDialogs.benefits.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("infoDialogs.benefits.title", e.target.value)} />
+                </div>
+                {content.infoDialogs.benefits.content.map((item: any, index: number) => (
+                  <div key={index} className="p-4 border rounded-lg space-y-3">
+                    <div className="space-y-2">
+                      <Label>Заголовок {index + 1}</Label>
+                      <Input
+                        value={item.title}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          const newContent = [...content.infoDialogs.benefits.content]
+                          newContent[index].title = e.target.value
+                          updateContent("infoDialogs.benefits.content", newContent)
+                        }}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Опис {index + 1}</Label>
+                      <Textarea
+                        value={item.description}
+                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                          const newContent = [...content.infoDialogs.benefits.content]
+                          newContent[index].description = e.target.value
+                          updateContent("infoDialogs.benefits.content", newContent)
+                        }}
+                        rows={3}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Діалог партнерів</CardTitle>
+                <CardDescription>Тексти для діалогу з партнерами</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Заголовок діалогу</Label>
+                  <Input value={content.infoDialogs.partners.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("infoDialogs.partners.title", e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Опис партнерів</Label>
+                  <Textarea
+                    value={content.infoDialogs.partners.description}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateContent("infoDialogs.partners.description", e.target.value)}
+                    rows={3}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Діалог контактів</CardTitle>
+                <CardDescription>Тексти для діалогу з контактами</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Заголовок діалогу</Label>
+                  <Input value={content.infoDialogs.contacts.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("infoDialogs.contacts.title", e.target.value)} />
                 </div>
               </CardContent>
             </Card>
@@ -467,14 +666,14 @@ function AdminPageContent() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label>Заголовок сторінки (Title)</Label>
-                  <Input value={content.seo.title} onChange={(e) => updateContent("seo.title", e.target.value)} />
+                  <Input value={content.seo.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateContent("seo.title", e.target.value)} />
                   <p className="text-xs text-muted-foreground">Рекомендовано: 50-60 символів</p>
                 </div>
                 <div className="space-y-2">
                   <Label>Опис (Description)</Label>
                   <Textarea
                     value={content.seo.description}
-                    onChange={(e) => updateContent("seo.description", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateContent("seo.description", e.target.value)}
                     rows={3}
                   />
                   <p className="text-xs text-muted-foreground">Рекомендовано: 150-160 символів</p>
@@ -483,7 +682,7 @@ function AdminPageContent() {
                   <Label>Ключові слова (Keywords)</Label>
                   <Textarea
                     value={content.seo.keywords}
-                    onChange={(e) => updateContent("seo.keywords", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateContent("seo.keywords", e.target.value)}
                     rows={2}
                   />
                   <p className="text-xs text-muted-foreground">Розділяйте ключові слова комами</p>
