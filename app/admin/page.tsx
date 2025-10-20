@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -14,7 +14,17 @@ import type { SiteContent } from "@/lib/content-data"
 import type { SurveyQuestion } from "@/lib/survey-data"
 import { useRouter, useSearchParams } from "next/navigation"
 
+export const dynamic = "force-dynamic"
+
 export default function AdminPage() {
+  return (
+    <Suspense fallback={<div />}>
+      <AdminPageContent />
+    </Suspense>
+  )
+}
+
+function AdminPageContent() {
   const [content, setContent] = useState<SiteContent | null>(null)
   const [questions, setQuestions] = useState<SurveyQuestion[]>([])
   const [isLoading, setIsLoading] = useState(true)
