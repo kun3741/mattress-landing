@@ -9,8 +9,13 @@
     "start": "next start",
     "db:init": "tsx scripts/init-mongodb.ts",
     "db:seed": "tsx scripts/init-mongodb.ts",
+    "db:test": "tsx scripts/test-api.ts",
+    "db:sync": "tsx scripts/check-sync.ts",
     "api:test": "tsx scripts/test-api-endpoints.ts",
-    "telegram:test": "tsx scripts/test-telegram.ts"
+    "telegram:test": "tsx scripts/test-telegram.ts",
+    "content:update": "tsx scripts/update-content.ts",
+    "db:seed:questions": "tsx scripts/seed-survey-questions.ts",
+    "prepare:github": "tsx scripts/prepare-clean-repo.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -81,8 +86,5 @@
     "tsx": "^4.20.6",
     "tw-animate-css": "1.3.3",
     "typescript": "^5"
-  },
-  "engines": {
-    "node": ">=20"
   }
 }
