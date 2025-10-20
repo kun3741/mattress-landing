@@ -122,4 +122,116 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Anti-blur and alignment fixes */
+  html, body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Ensure images and videos render crisply and don't cause subpixel blur */
+  img, video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  /* Prevent transforms from producing blurry edges for animated elements */
+  * {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+  }
+
+  /* Consistent container padding to avoid small shift on different screens */
+  .container {
+    padding-left: 1rem; /* matches px-4 */
+    padding-right: 1rem;
+  }
+
+  /* Utility classes to fine-tune alignment where needed */
+  .pixel-perfect {
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+  }
+
+  .align-right-mobile {
+    @apply text-right md:text-left;
+  }
+
+  .align-left-mobile {
+    @apply text-left md:text-left;
+  }
+
+  /* Reduce blur for text-heavy components */
+  .card, .button, .input, .label {
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Plain-CSS helpers to fix rendering and mobile alignment issues */
+/* Use these classes in components: .no-blur, .shift-left-mobile, .shift-right-mobile, .center-block */
+.no-blur {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+}
+
+img, video, svg {
+  image-rendering: -webkit-optimize-contrast;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform-origin: center center;
+}
+
+.center-block {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Small nudge utilities for mobile screens where elements appear too far right */
+.shift-left-mobile {
+  transform: translateX(0) !important;
+}
+
+.shift-right-mobile {
+  transform: translateX(0) !important;
+}
+
+@media (max-width: 767px) {
+  /* move element 6px to the left on small screens */
+  .shift-left-mobile {
+    transform: translateX(-6px) !important;
+  }
+  /* move element 6px to the right on small screens */
+  .shift-right-mobile {
+    transform: translateX(6px) !important;
+  }
+  /* reduce default container side padding slightly to avoid horizontal overflow */
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+
+/* Useful utility to ensure interactive controls render sharply and don't shift */
+.control-fix {
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  will-change: transform, opacity;
+}
+
+/* Helper to vertically center icon+text groups when misaligned */
+.icon-text-center {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
