@@ -1,0 +1,247 @@
+/* Sleep and Mattress Themed Animations */
+
+/* Peaceful breathing animation */
+@keyframes peaceful-breathing {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: scale(1.02); 
+    opacity: 0.9; 
+  }
+}
+
+/* Gentle mattress bounce */
+@keyframes mattress-bounce {
+  0%, 100% { 
+    transform: translateY(0px) scaleY(1); 
+  }
+  25% { 
+    transform: translateY(-8px) scaleY(0.95); 
+  }
+  50% { 
+    transform: translateY(-4px) scaleY(0.98); 
+  }
+  75% { 
+    transform: translateY(-2px) scaleY(0.99); 
+  }
+}
+
+/* Floating like in a dream */
+@keyframes dream-float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  33% { 
+    transform: translateY(-12px) rotate(1deg); 
+  }
+  66% { 
+    transform: translateY(6px) rotate(-0.5deg); 
+  }
+}
+
+/* Sleep wave motion */
+@keyframes sleep-wave {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  33% { 
+    transform: translateY(-6px) rotate(1deg); 
+  }
+  66% { 
+    transform: translateY(3px) rotate(-0.5deg); 
+  }
+}
+
+/* Soft gradient animation */
+@keyframes gradient-shift {
+  0% { 
+    background-position: 0% 50%; 
+  }
+  50% { 
+    background-position: 100% 50%; 
+  }
+  100% { 
+    background-position: 0% 50%; 
+  }
+}
+
+/* Gentle pulse like heartbeat while sleeping */
+@keyframes sleep-pulse {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: scale(1.03); 
+    opacity: 0.8; 
+  }
+}
+
+/* Cloud-like floating motion */
+@keyframes cloud-drift {
+  0%, 100% { 
+    transform: translateX(0px) translateY(0px); 
+  }
+  25% { 
+    transform: translateX(10px) translateY(-5px); 
+  }
+  50% { 
+    transform: translateX(0px) translateY(-8px); 
+  }
+  75% { 
+    transform: translateX(-10px) translateY(-3px); 
+  }
+}
+
+/* Twinkle like stars in sleep */
+@keyframes twinkle {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+  25% { 
+    opacity: 0.7; 
+    transform: scale(0.95); 
+  }
+  50% { 
+    opacity: 0.4; 
+    transform: scale(0.9); 
+  }
+  75% { 
+    opacity: 0.7; 
+    transform: scale(0.95); 
+  }
+}
+
+/* Gentle sway like a hammock */
+@keyframes gentle-sway {
+  0%, 100% { 
+    transform: rotate(0deg); 
+  }
+  25% { 
+    transform: rotate(1deg); 
+  }
+  75% { 
+    transform: rotate(-1deg); 
+  }
+}
+
+/* CSS Classes for easy usage */
+.animate-peaceful-breathing {
+  animation: peaceful-breathing 4s ease-in-out infinite;
+}
+
+.animate-mattress-bounce {
+  animation: mattress-bounce 3s ease-in-out infinite;
+}
+
+.animate-dream-float {
+  animation: dream-float 8s ease-in-out infinite;
+}
+
+.animate-sleep-wave {
+  animation: sleep-wave 6s ease-in-out infinite;
+}
+
+.animate-gradient-shift {
+  background: linear-gradient(-45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1));
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.animate-sleep-pulse {
+  animation: sleep-pulse 3s ease-in-out infinite;
+}
+
+.animate-cloud-drift {
+  animation: cloud-drift 12s ease-in-out infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+.animate-gentle-sway {
+  animation: gentle-sway 8s ease-in-out infinite;
+}
+
+/* Hover effects for interactive elements */
+.hover-mattress-press:hover {
+  transform: scaleY(0.98);
+  transition: transform 0.2s ease-out;
+}
+
+.hover-soft-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease-out;
+}
+
+.hover-gentle-glow:hover {
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  transition: box-shadow 0.3s ease-out;
+}
+
+/* Sleep-themed gradient backgrounds */
+.bg-sleep-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-dream-gradient {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.bg-peaceful-gradient {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.bg-night-gradient {
+  background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+}
+
+/* Text animations for sleep-themed content */
+.animate-fade-in-words {
+  opacity: 0;
+  animation: fadeInWords 0.8s ease-out forwards;
+}
+
+@keyframes fadeInWords {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Delayed animations for staggered effects */
+.animate-delay-100 { animation-delay: 0.1s; }
+.animate-delay-200 { animation-delay: 0.2s; }
+.animate-delay-300 { animation-delay: 0.3s; }
+.animate-delay-400 { animation-delay: 0.4s; }
+.animate-delay-500 { animation-delay: 0.5s; }
+.animate-delay-600 { animation-delay: 0.6s; }
+.animate-delay-700 { animation-delay: 0.7s; }
+.animate-delay-800 { animation-delay: 0.8s; }
+
+/* Smooth transitions for all interactive elements */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sleep-themed shadows */
+.shadow-sleep {
+  box-shadow: 0 4px 14px 0 rgba(147, 51, 234, 0.1);
+}
+
+.shadow-dream {
+  box-shadow: 0 8px 30px 0 rgba(240, 147, 251, 0.2);
+}
+
+.shadow-peaceful {
+  box-shadow: 0 6px 20px 0 rgba(79, 172, 254, 0.15);
+}
