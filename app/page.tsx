@@ -101,13 +101,13 @@ function HomePage() {
         <ScrollAnimation animation="fadeUp" delay={100}>
           <div className="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
             <ScrollAnimation animation="fadeUp" delay={100}>
-              <div className="h-8 md:h-9 flex items-center">
+              <div className="h-10 md:h-12 flex items-center">
                 <Image
                   src="/1 logo 10.png"
                   alt="Підбір матрацу — логотип"
-                  width={140}
-                  height={36}
-                  className="h-8 md:h-9 w-auto"
+                  width={180}
+                  height={48}
+                  className="h-10 md:h-12 w-auto"
                   priority
                 />
               </div>
@@ -115,17 +115,17 @@ function HomePage() {
 
             <nav className="hidden md:flex gap-4">
               <ButtonHover>
-                <Button variant="ghost" size="sm" onClick={() => openInfoDialog("benefits")}>
+                <Button variant="ghost" size="sm" onClick={() => openInfoDialog("benefits")} className="whitespace-normal text-center leading-tight">
                   {navigation?.benefits || "Переваги"}
                 </Button>
               </ButtonHover>
               <ButtonHover>
-                <Button variant="ghost" size="sm" onClick={() => openInfoDialog("factories")}>
+                <Button variant="ghost" size="sm" onClick={() => openInfoDialog("factories")} className="whitespace-normal text-center leading-tight">
                   {navigation?.partners || "Партнери"}
                 </Button>
               </ButtonHover>
               <ButtonHover>
-                <Button variant="ghost" size="sm" onClick={() => openInfoDialog("contacts")}>
+                <Button variant="ghost" size="sm" onClick={() => openInfoDialog("contacts")} className="whitespace-normal text-center leading-tight">
                   {navigation?.contacts || "Контакти"}
                 </Button>
               </ButtonHover>
@@ -140,17 +140,17 @@ function HomePage() {
               <SheetContent aria-label="Мобільне меню">
                 <nav className="flex flex-col gap-4 mt-8">
                   <SheetClose asChild>
-                    <Button variant="ghost" className="justify-start" onClick={() => openInfoDialog("benefits")}>
+                    <Button variant="ghost" className="justify-start whitespace-normal text-left leading-tight" onClick={() => openInfoDialog("benefits")}>
                       {navigation?.benefits || "Переваги"}
                     </Button>
                   </SheetClose>
                   <SheetClose asChild>
-                    <Button variant="ghost" className="justify-start" onClick={() => openInfoDialog("factories")}>
+                    <Button variant="ghost" className="justify-start whitespace-normal text-left leading-tight" onClick={() => openInfoDialog("factories")}>
                       {navigation?.partners || "Партнери"}
                     </Button>
                   </SheetClose>
                   <SheetClose asChild>
-                    <Button variant="ghost" className="justify-start" onClick={() => openInfoDialog("contacts")}>
+                    <Button variant="ghost" className="justify-start whitespace-normal text-left leading-tight" onClick={() => openInfoDialog("contacts")}>
                       {navigation?.contacts || "Контакти"}
                     </Button>
                   </SheetClose>
@@ -161,37 +161,57 @@ function HomePage() {
         </ScrollAnimation>
       </header>
 
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 py-12 md:py-16 lg:py-24">
-        <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-8">
+      {/* Hero Section with Video */}
+      <section className="container mx-auto px-4 py-8 md:py-12 lg:py-16">
+        <div className="max-w-6xl mx-auto">
+          {/* Mobile title - shown only on mobile */}
+          <div className="block lg:hidden text-center mb-6">
             <ScrollAnimation animation="fadeUp" delay={100}>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-balance leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-bold text-balance leading-tight">
                 {hero?.title || "Ідеальний підбір матрацу за 5хв"} ✨
               </h2>
             </ScrollAnimation>
-            
-            <ScrollAnimation animation="fadeUp" delay={200}>
-              <p className="text-base md:text-lg lg:text-xl text-muted-foreground text-pretty max-w-2xl mx-auto px-2">
-                {hero?.subtitle || "Професійний алгоритмічний підбір матрацу з урахуванням ваших індивідуальних особливостей."}
-              </p>
-            </ScrollAnimation>
           </div>
-        </section>
 
-      {/* Sleep divider */}
-      <SleepDivider />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+            {/* Left side - Text content */}
+            <div className="text-center lg:text-left space-y-4 md:space-y-6 order-2 lg:order-1">
+              {/* Desktop title - hidden on mobile */}
+              <div className="hidden lg:block">
+                <ScrollAnimation animation="fadeUp" delay={100}>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-balance leading-tight">
+                    {hero?.title || "Ідеальний підбір матрацу за 5хв"} ✨
+                  </h2>
+                </ScrollAnimation>
+              </div>
+              
+              <ScrollAnimation animation="fadeUp" delay={200}>
+                <p className="text-base md:text-lg lg:text-xl text-muted-foreground text-pretty max-w-2xl mx-auto lg:mx-0 px-2">
+                  {hero?.subtitle || "Професійний алгоритмічний підбір матрацу з урахуванням ваших індивідуальних особливостей. Співпраця з 12 провідними фабриками України."}
+                </p>
+              </ScrollAnimation>
 
-      {/* Video Section - Now first after hero */}
-      <VideoDescriptionToggle />
+            </div>
+
+            {/* Right side - Video */}
+            <div className="order-1 lg:order-2">
+              <VideoDescriptionToggle 
+                onSurveyOpen={() => setSurveyOpen(true)}
+                ctaButtonText={hero?.ctaButton || "Підібрати матрац за допомогою програми"}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Sleep divider */}
       <SleepDivider />
 
       {/* Benefits Section */}
-      <section className="container mx-auto px-4 py-12 md:py-16">
+      <section className="container mx-auto px-4 py-8 md:py-12">
         <div className="max-w-6xl mx-auto">
           <ScrollAnimation animation="fadeUp" delay={100}>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 text-balance px-2">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8 text-balance px-2">
               {benefitsSection?.title || "Чому варто довірити підбір нам?"}
             </h3>
           </ScrollAnimation>
@@ -217,19 +237,13 @@ function HomePage() {
       {/* Sleep divider */}
       <SleepDivider />
 
-      {/* Partners Section */}
-      <PartnersSection />
-
-      {/* Sleep divider */}
-      <SleepDivider />
-
-      {/* CTA Section */}
-      <section className="container mx-auto px-4 py-12 md:py-16">
+      {/* Call-to-Action Section after Benefits */}
+      <section className="container mx-auto px-4 py-8 md:py-12">
         <ScrollAnimation animation="scale" delay={100}>
-          <div className="max-w-4xl mx-auto luxury-border rounded-xl md:rounded-2xl p-6 md:p-8 lg:p-12 text-center space-y-4 md:space-y-6 premium-shadow bg-white/90 backdrop-blur-sm">
+          <div className="max-w-4xl mx-auto luxury-border rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 text-center space-y-3 md:space-y-4 premium-shadow bg-white/90 backdrop-blur-sm">
             <ScrollAnimation animation="fadeUp" delay={200}>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-balance">
-                {cta?.title || "Готові знайти свій ідеальний матрац?"} 🌙
+                {cta?.title || "Готові розпочати підбір матрацу?"} 🌙
               </h3>
             </ScrollAnimation>
             <ScrollAnimation animation="fadeUp" delay={300}>
@@ -241,16 +255,25 @@ function HomePage() {
               <ButtonHover>
                 <Button
                   size="lg"
-                  className="text-base md:text-lg px-6 py-5 md:px-8 md:py-6 h-auto w-full sm:w-auto premium-shadow gold-accent text-white font-semibold animate-mattress-bounce hover:opacity-90 transition-opacity"
+                  className="text-base md:text-lg px-6 py-5 md:px-8 md:py-6 h-auto w-full sm:w-auto premium-shadow gold-accent text-white font-semibold animate-mattress-bounce hover:opacity-90 transition-opacity whitespace-normal text-center leading-tight"
                   onClick={() => setSurveyOpen(true)}
                 >
-                  {cta?.button || "Розпочати підбір зараз ✨"}
+                  {cta?.button || "Підібрати матрац за допомогою програми"}
                 </Button>
               </ButtonHover>
             </ScrollAnimation>
           </div>
         </ScrollAnimation>
       </section>
+
+      {/* Sleep divider */}
+      <SleepDivider />
+
+      {/* Partners Section */}
+      <PartnersSection />
+
+      {/* Sleep divider */}
+      <SleepDivider />
 
       {/* Footer */}
       <footer className="border-t bg-white/80 backdrop-blur-sm mt-12 md:mt-16">
@@ -260,12 +283,12 @@ function HomePage() {
               <p className="text-xs md:text-sm text-muted-foreground">{footer?.copyright || "© 2025 Підбір Матрацу. Всі права захищені. 💤"}</p>
               <div className="flex gap-4">
                 <ButtonHover>
-                  <Button variant="ghost" size="sm" onClick={() => openInfoDialog("contacts")}>
+                  <Button variant="ghost" size="sm" onClick={() => openInfoDialog("contacts")} className="whitespace-normal text-center leading-tight">
                     {footer?.contacts || "Контакти"}
                   </Button>
                 </ButtonHover>
                 <ButtonHover>
-                  <Button variant="ghost" size="sm" onClick={() => openInfoDialog("factories")}>
+                  <Button variant="ghost" size="sm" onClick={() => openInfoDialog("factories")} className="whitespace-normal text-center leading-tight">
                     {footer?.partners || "Партнери"}
                   </Button>
                 </ButtonHover>

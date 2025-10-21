@@ -251,7 +251,7 @@ export const GradientAnimation = ({
           100% { background-position: 0% 50%; }
         }
         .animate-gradient-shift {
-          background: linear-gradient(-45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1));
+          background: linear-gradient(-45deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.15), rgba(34, 197, 94, 0.15), rgba(59, 130, 246, 0.15));
           background-size: 400% 400%;
           animation: gradient-shift 8s ease infinite;
         }

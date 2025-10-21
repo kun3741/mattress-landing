@@ -12,7 +12,7 @@
   --card-foreground: oklch(0.15 0.02 30);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0.02 30);
-  --primary: oklch(0.45 0.12 45);
+  --primary: oklch(0.55 0.18 45);
   --primary-foreground: oklch(0.98 0.01 45);
   --secondary: oklch(0.92 0.02 45);
   --secondary-foreground: oklch(0.15 0.02 30);
@@ -167,11 +167,11 @@
   /* Luxury gradient backgrounds */
   .luxury-gradient {
     background: linear-gradient(135deg, 
-      oklch(0.95 0.05 45) 0%, 
-      oklch(0.98 0.02 60) 25%, 
-      oklch(0.96 0.03 30) 50%, 
-      oklch(0.94 0.04 45) 75%, 
-      oklch(0.97 0.02 60) 100%);
+      oklch(0.95 0.08 45) 0%, 
+      oklch(0.98 0.05 60) 25%, 
+      oklch(0.96 0.06 30) 50%, 
+      oklch(0.94 0.07 45) 75%, 
+      oklch(0.97 0.05 60) 100%);
   }
 
   .luxury-gradient-dark {
