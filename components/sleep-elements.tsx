@@ -18,7 +18,7 @@ export const FloatingSleepElements = () => {
 
 // Sleep-themed section divider
 export const SleepDivider = ({ className = "" }: { className?: string }) => (
-  <div className={`flex justify-center items-center py-8 ${className}`}>
+  <div className={`flex justify-center items-center py-4 ${className}`}>
     <div className="flex items-center gap-4">
       <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
       <div className="w-2 h-2 rounded-full bg-primary/30"></div>

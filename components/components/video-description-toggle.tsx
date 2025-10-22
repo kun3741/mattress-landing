@@ -88,7 +88,7 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
     <div className="w-full">
       <ScrollAnimation animation="fadeUp" delay={100}>
         <div className="bg-white/90 backdrop-blur-sm luxury-border rounded-xl md:rounded-2xl premium-shadow overflow-hidden">          {/* Video Container */}
-          <div className="relative aspect-[16/9] md:aspect-[3/4] bg-gray-100 max-w-full md:max-w-[240px] lg:max-w-[260px] mx-auto md:mt-4">
+          <div className="relative aspect-[16/9] md:aspect-[3/4] bg-gray-100 max-w-full md:max-w-[280px] mx-auto md:mt-4">
             {videoError ? (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
                 <div className="text-center space-y-4">
@@ -155,12 +155,12 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
           </div>
           
           {/* Video Caption */}
-          <div className="p-3 md:p-3 lg:p-4 text-center space-y-1.5 md:space-y-2">
-            <h3 className="text-base md:text-lg lg:text-xl font-bold">
+          <div className="p-3 md:p-4 text-center space-y-2">
+            <h3 className="text-lg md:text-xl font-bold">
               {content?.video?.ctaTitle || "Як працює наша програма підбору?"}
             </h3>
             
-            <p className="text-xs md:text-sm lg:text-base text-muted-foreground">
+            <p className="text-sm md:text-base text-muted-foreground">
               {content?.video?.ctaSubtitle || "Подивіться коротке відео і дізнайтесь, як за 5 хвилин знайти ідеальний матрац для себе."}
             </p>
             
@@ -176,10 +176,10 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
             
             {/* CTA Button in video block */}
             {onSurveyOpen && ctaButtonText && (
-              <div className="mt-3">
+              <div className="mt-4">
                 <Button
                   size="lg"
-                  className="text-sm md:text-base px-5 py-4 md:px-6 md:py-5 h-auto w-full premium-shadow gold-accent text-white font-semibold animate-mattress-bounce hover:opacity-90 transition-opacity whitespace-normal text-center leading-tight"
+                  className="text-base px-6 py-5 h-auto w-full premium-shadow gold-accent text-white font-semibold animate-mattress-bounce hover:opacity-90 transition-opacity whitespace-normal text-center leading-tight"
                   onClick={onSurveyOpen}
                 >
                   {ctaButtonText}

@@ -99,15 +99,15 @@ function HomePage() {
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-40">
         <ScrollAnimation animation="fadeUp" delay={100}>
-          <div className="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
+          <div className="container mx-auto px-4 py-2 md:py-3 flex justify-between items-center">
             <ScrollAnimation animation="fadeUp" delay={100}>
-              <div className="h-10 md:h-12 flex items-center">
+              <div className="h-8 md:h-10 flex items-center">
                 <Image
                   src="/1 logo 10.png"
                   alt="Підбір матрацу — логотип"
-                  width={180}
-                  height={48}
-                  className="h-10 md:h-12 w-auto"
+                  width={150}
+                  height={40}
+                  className="h-8 md:h-10 w-auto"
                   priority
                 />
               </div>
@@ -162,7 +162,7 @@ function HomePage() {
       </header>
 
       {/* Hero Section with Video */}
-      <section className="container mx-auto px-4 py-8 md:py-12 lg:py-16">
+      <section className="container mx-auto px-4 py-6 md:py-2 lg:py-2">
         <div className="max-w-6xl mx-auto">
           {/* Mobile title - shown only on mobile */}
           <div className="block lg:hidden text-center mb-6">
@@ -173,7 +173,7 @@ function HomePage() {
             </ScrollAnimation>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-6 items-center">
             {/* Left side - Text content */}
             <div className="text-center lg:text-left space-y-4 md:space-y-6 order-2 lg:order-1">
               {/* Desktop title - hidden on mobile */}
@@ -205,13 +205,15 @@ function HomePage() {
       </section>
 
       {/* Sleep divider */}
-      <SleepDivider />
+      <div className="my-4 md:my-2">
+        <SleepDivider />
+      </div>
 
       {/* Benefits Section */}
-      <section className="container mx-auto px-4 py-8 md:py-12">
+      <section className="container mx-auto px-4 py-6 md:py-2">
         <div className="max-w-6xl mx-auto">
           <ScrollAnimation animation="fadeUp" delay={100}>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8 text-balance px-2">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 md:mb-4 text-balance px-2">
               {benefitsSection?.title || "Чому варто довірити підбір нам?"}
             </h3>
           </ScrollAnimation>
@@ -238,7 +240,7 @@ function HomePage() {
       <SleepDivider />
 
       {/* Call-to-Action Section after Benefits */}
-      <section className="container mx-auto px-4 py-8 md:py-12">
+      <section className="container mx-auto px-4 py-8 md:py-4">
         <ScrollAnimation animation="scale" delay={100}>
           <div className="max-w-4xl mx-auto luxury-border rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 text-center space-y-3 md:space-y-4 premium-shadow bg-white/90 backdrop-blur-sm">
             <ScrollAnimation animation="fadeUp" delay={200}>
