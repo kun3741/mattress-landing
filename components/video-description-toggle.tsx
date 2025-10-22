@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ScrollAnimation } from "@/components/css-animations"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { Video, BookOpen, Play, Pause } from "lucide-react"
 
 interface VideoDescriptionToggleProps {
@@ -16,6 +17,7 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
   const [isPlaying, setIsPlaying] = useState(false)
   const [content, setContent] = useState<any>(null)
   const videoRef = useRef<HTMLVideoElement | null>(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     async function loadContent() {
@@ -57,30 +59,42 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
       }
     }
   }
-
   const handleVideoError = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
     console.error('Video error:', e)
+    console.error('Video error details:', {
+      error: e.currentTarget.error,
+      networkState: e.currentTarget.networkState,
+      readyState: e.currentTarget.readyState,
+      src: e.currentTarget.currentSrc
+    })
     setVideoError(true)
+  }
+
+  const retryVideo = () => {
+    setVideoError(false)
+    if (videoRef.current) {
+      // Очищуємо джерела та перезавантажуємо
+      videoRef.current.load()
+      // Додаємо невелику затримку перед спробою відтворення
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.play().catch(console.error)
+        }
+      }, 100)
+    }
   }
 
   return (
     <div className="w-full">
       <ScrollAnimation animation="fadeUp" delay={100}>
-        <div className="bg-white/90 backdrop-blur-sm luxury-border rounded-xl md:rounded-2xl premium-shadow overflow-hidden">
-          {/* Video Container */}
-          <div className="relative aspect-[9/16] bg-gray-100 max-w-[280px] mx-auto">
+        <div className="bg-white/90 backdrop-blur-sm luxury-border rounded-xl md:rounded-2xl premium-shadow overflow-hidden">          {/* Video Container */}
+          <div className="relative aspect-[16/9] md:aspect-[9/16] bg-gray-100 max-w-full md:max-w-[280px] mx-auto">
             {videoError ? (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
                 <div className="text-center space-y-4">
                   <Video className="w-16 h-16 text-gray-400 mx-auto" />
-                  <p className="text-gray-500">Відео тимчасово недоступне</p>
-                  <button 
-                    onClick={() => {
-                      setVideoError(false)
-                      if (videoRef.current) {
-                        videoRef.current.load()
-                      }
-                    }}
+                  <p className="text-gray-500">Відео тимчасово недоступне</p>                  <button 
+                    onClick={retryVideo}
                     className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors"
                   >
                     Спробувати знову
@@ -88,11 +102,10 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
                 </div>
               </div>
             ) : (
-              <>
-                <video
+              <>                <video
                   ref={videoRef}
                   className="w-full h-full object-cover"
-                  poster="/placevideo.jpg"
+                  poster={isMobile ? "/preview-pc.png" : "/preview-mobile.png"}
                   onError={handleVideoError}
                   onPlay={() => setIsPlaying(true)}
                   onPause={() => setIsPlaying(false)}
@@ -100,11 +113,21 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
                   preload="metadata"
                   playsInline
                   webkit-playsinline="true"
+                  x-webkit-airplay="allow"
                   controls={false}
                   muted
-                >
-                  <source src="/taras-intro.webm" type="video/webm" />
-                  <source src="/taras-intro.mp4" type="video/mp4" />
+                  crossOrigin="anonymous">{isMobile ? (
+                    <>
+                      <source src="/video-pc.mp4" type="video/mp4" />
+                      <source src="/taras-intro.mp4" type="video/mp4" />
+                    </>
+                  ) : (
+                    <>
+                      <source src="/video-mobile.mp4" type="video/mp4" />
+                      <source src="/taras-intro.mp4" type="video/mp4" />
+                      <source src="/taras-intro.webm" type="video/webm" />
+                    </>
+                  )}
                   Ваш браузер не підтримує відео.
                 </video>
                 {!isPlaying && (
