@@ -31,6 +31,7 @@ function AdminPageContent() {
   const [savingStatus, setSavingStatus] = useState<string | null>(null)
   const [contentDirty, setContentDirty] = useState(false)
   const [questionsDirty, setQuestionsDirty] = useState(false)
+  const [optionsInputs, setOptionsInputs] = useState<Record<number, string>>({})
   const { toast } = useToast()
   const router = useRouter()
   const sp = useSearchParams()
@@ -48,6 +49,16 @@ function AdminPageContent() {
 
       setContent(contentData)
       setQuestions(questionsData)
+      
+      // Ініціалізуємо optionsInputs для кожного питання
+      const initialOptionsInputs: Record<number, string> = {}
+      questionsData.forEach((q: SurveyQuestion, index: number) => {
+        if (q.options && Array.isArray(q.options)) {
+          initialOptionsInputs[index] = q.options.join(", ")
+        }
+      })
+      setOptionsInputs(initialOptionsInputs)
+      
       setContentDirty(false)
       setQuestionsDirty(false)
     } catch (error) {
@@ -69,6 +80,16 @@ function AdminPageContent() {
       if (!res.ok) throw new Error("Failed to load defaults")
       const data = await res.json()
       setQuestions(data)
+      
+      // Ініціалізуємо optionsInputs
+      const newOptionsInputs: Record<number, string> = {}
+      data.forEach((q: SurveyQuestion, index: number) => {
+        if (q.options && Array.isArray(q.options)) {
+          newOptionsInputs[index] = q.options.join(", ")
+        }
+      })
+      setOptionsInputs(newOptionsInputs)
+      
       setQuestionsDirty(true)
       setSavingStatus(null)
       toast({ title: "Готово", description: "Нові питання завантажено. Не забудьте зберегти." })
@@ -96,10 +117,21 @@ function AdminPageContent() {
 
       // Зберігаємо питання, якщо є зміни
       if (questionsDirty) {
+        // Конвертуємо optionsInputs назад в масиви перед збереженням
+        const questionsToSave = questions.map((q, index) => {
+          if (optionsInputs[index]) {
+            return {
+              ...q,
+              options: optionsInputs[index].split(",").map((s: string) => s.trim()).filter(Boolean)
+            }
+          }
+          return q
+        })
+        
         const resp2 = await fetch("/api/survey-questions", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ questions }),
+          body: JSON.stringify({ questions: questionsToSave }),
         })
         if (!resp2.ok) throw new Error("Failed to save questions")
       }
@@ -149,6 +181,13 @@ function AdminPageContent() {
 
     const updatedQuestions = [...questions, newQuestion]
     setQuestions(updatedQuestions)
+    
+    // Додаємо optionsInput для нового питання
+    setOptionsInputs({
+      ...optionsInputs,
+      [updatedQuestions.length - 1]: "Варіант 1, Варіант 2"
+    })
+    
     setQuestionsDirty(true)
   }
 
@@ -162,6 +201,19 @@ function AdminPageContent() {
   const deleteQuestion = (index: number) => {
     const updatedQuestions = questions.filter((_: SurveyQuestion, i: number) => i !== index)
     setQuestions(updatedQuestions)
+    
+    // Оновлюємо optionsInputs: видаляємо поточний індекс і зсуваємо інші
+    const newOptionsInputs: Record<number, string> = {}
+    Object.keys(optionsInputs).forEach((key) => {
+      const keyIndex = parseInt(key)
+      if (keyIndex < index) {
+        newOptionsInputs[keyIndex] = optionsInputs[keyIndex]
+      } else if (keyIndex > index) {
+        newOptionsInputs[keyIndex - 1] = optionsInputs[keyIndex]
+      }
+    })
+    setOptionsInputs(newOptionsInputs)
+    
     setQuestionsDirty(true)
   }
 
@@ -402,7 +454,7 @@ function AdminPageContent() {
                       <div className="space-y-2">
                         <Label>Текст питання</Label>
                         <Input
-                          value={question.question}
+                          value={question.question || ""}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "question", e.target.value)}
                         />
                       </div>
@@ -410,7 +462,7 @@ function AdminPageContent() {
                         <Label>Тип питання</Label>
                         <select
                           className="w-full p-2 border rounded-md"
-                          value={question.type}
+                          value={question.type || "radio"}
                           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => updateQuestion(index, "type", e.target.value)}
                         >
                           <option value="radio">Вибір одного варіанту</option>
@@ -433,14 +485,15 @@ function AdminPageContent() {
                       <div className="space-y-2">
                         <Label>Варіанти відповідей (через кому)</Label>
                         <Textarea
-                          value={question.options?.join(", ") || ""}
-                          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                            updateQuestion(
-                              index,
-                              "options",
-                              e.target.value.split(",").map((s: string) => s.trim()).filter(Boolean),
-                            )
-                          }
+                          value={optionsInputs[index] || ""}
+                          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                            // Просто зберігаємо текст як є
+                            setOptionsInputs({
+                              ...optionsInputs,
+                              [index]: e.target.value
+                            })
+                            setQuestionsDirty(true)
+                          }}
                           rows={2}
                         />
                       </div>

@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -33,10 +33,36 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
   const [userData, setUserData] = useState<UserData>({ name: "", phone: "", city: "" })
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [loadedQuestions, setLoadedQuestions] = useState<any[]>([])
+  const [isLoadingQuestions, setIsLoadingQuestions] = useState(true)
   const { toast } = useToast()
+
+  // Load questions from API
+  useEffect(() => {
+    const loadQuestions = async () => {
+      try {
+        const response = await fetch('/api/survey-questions')
+        const data = await response.json()
+        setLoadedQuestions(data)
+      } catch (error) {
+        console.error('Failed to load questions:', error)
+      } finally {
+        setIsLoadingQuestions(false)
+      }
+    }
+    
+    if (open) {
+      loadQuestions()
+    }
+  }, [open])
 
   // Build full conditional survey once
   const questions: SurveyQuestion[] = useMemo(() => {
+    // Helper function to get question data from loaded questions
+    const getLoadedQuestion = (id: string) => {
+      return loadedQuestions.find(q => q.id === id)
+    }
+
     const ALL_SIZES = [
       "80*190", "80*200", "90*200", "90*190",
       "120*190", "120*200", "140*190", "140*200",
@@ -103,8 +129,24 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
       // Фініш для всіх – контактні дані вже зібрані на першому кроці
       // (видалено дублікати "city" та "phone_confirm")
     ]
+    
+    // Merge loaded questions with default questions to update texts
+    if (loadedQuestions.length > 0) {
+      return q.map(defaultQ => {
+        const loaded = getLoadedQuestion(defaultQ.id)
+        if (loaded) {
+          return {
+            ...defaultQ,
+            question: loaded.question || defaultQ.question,
+            options: loaded.options || defaultQ.options,
+          }
+        }
+        return defaultQ
+      })
+    }
+    
     return q
-  }, [])
+  }, [loadedQuestions, answers])
 
   const visibleIndexes = useMemo(() => {
     return questions
@@ -241,7 +283,13 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
           </form>
         )}
 
-        {step === "survey" && currentQuestion && (
+        {step === "survey" && isLoadingQuestions && (
+          <div className="flex justify-center items-center py-8">
+            <Loader2 className="w-8 h-8 animate-spin" />
+          </div>
+        )}
+
+        {step === "survey" && !isLoadingQuestions && currentQuestion && (
           <div className="space-y-4">
             <div className="h-2 bg-muted rounded-full overflow-hidden">
               <div className="h-full bg-primary" style={{ width: `${progress}%` }} />
