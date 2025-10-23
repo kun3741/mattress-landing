@@ -41,36 +41,28 @@ async function initializeDatabase() {
     // Initial site content from content-data.ts
     const initialContent: Omit<SiteContent, '_id' | 'updated_at'>[] = [
       {
-        key: 'hero_title',
-        value: defaultContent.hero.title
+        key: 'hero',
+        value: defaultContent.hero
       },
       {
-        key: 'hero_subtitle', 
-        value: defaultContent.hero.subtitle
-      },
-      {
-        key: 'hero_cta_button',
-        value: defaultContent.hero.ctaButton
-      },
-      {
-        key: 'video_title',
-        value: defaultContent.video.title
-      },
-      {
-        key: 'video_url',
-        value: defaultContent.video.url
+        key: 'video',
+        value: defaultContent.video
       },
       {
         key: 'benefits',
         value: defaultContent.benefits
       },
       {
-        key: 'cta_title',
-        value: defaultContent.cta.title
+        key: 'benefitsSection',
+        value: defaultContent.benefitsSection
       },
       {
-        key: 'cta_subtitle',
-        value: defaultContent.cta.subtitle
+        key: 'partners',
+        value: defaultContent.partners
+      },
+      {
+        key: 'cta',
+        value: defaultContent.cta
       },
       {
         key: 'contacts',
@@ -81,16 +73,20 @@ async function initializeDatabase() {
         value: defaultContent.factories
       },
       {
+        key: 'navigation',
+        value: defaultContent.navigation
+      },
+      {
+        key: 'footer',
+        value: defaultContent.footer
+      },
+      {
+        key: 'infoDialogs',
+        value: defaultContent.infoDialogs
+      },
+      {
         key: 'seo',
         value: defaultContent.seo
-      },
-      {
-        key: 'survey_title',
-        value: 'Опитування для підбору матрацу'
-      },
-      {
-        key: 'survey_description',
-        value: 'Відповідайте на запитання, щоб ми змогли підібрати найкращий матрац саме для вас'
       }
     ]
     

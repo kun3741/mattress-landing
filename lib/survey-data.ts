@@ -84,7 +84,8 @@ export const surveyQuestions: SurveyQuestion[] = [
     ],
     required: true,
   },
-  { id: "health_issues", question: "Чи є у Вас проблеми зі здоров'ям? (вкажіть)", type: "text", required: false },
+  { id: "pain_custom", question: "опишіть конкретно свій біль або дискомфорт", type: "text", required: true },
+  { id: "health_issues", question: "Чи є у вас проблеми зі здоров'ям, якщо так, то опишіть конкретно які", type: "text", required: false },
 
   {
     id: "current_mattress",
@@ -97,7 +98,7 @@ export const surveyQuestions: SurveyQuestion[] = [
 
   {
     id: "dissatisfaction",
-    question: "Що саме Вас не влаштовує?",
+    question: "Що саме вас не влаштовує в матраці на якому спите зараз",
     type: "radio",
     options: [
       "просів",
@@ -142,7 +143,7 @@ export const surveyQuestions: SurveyQuestion[] = [
     options: ["тільки пружинні", "тільки безпружинні", "головне щоб комфортно було"],
     required: true,
   },
-  { id: "adult_extra", question: "Особливості вашого тіла / запитання (необов'язково)", type: "text", required: false },
+  { id: "adult_extra", question: "Особливості Вашого тіла, або Ваші запитання", type: "text", required: false },
 
   // Дитина
   { id: "child_age", question: "Скільки років дитині", type: "number", required: true },
@@ -166,7 +167,7 @@ export const surveyQuestions: SurveyQuestion[] = [
   { id: "child_current_name", question: "Назва/модель (за бажанням)", type: "text", required: false },
   {
     id: "child_dissatisfaction",
-    question: "Що саме не влаштовує?",
+    question: "що конкретно не влаштовує зараз під час сну",
     type: "radio",
     options: ["просів", "твердий", "м'який", "дитині не зручний", "свій варіант", "далі"],
     required: true,
