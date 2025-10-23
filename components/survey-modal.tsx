@@ -28,7 +28,7 @@ interface SurveyModalProps {
 }
 
 export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
-  const [step, setStep] = useState<"contact" | "survey" | "success" | "loading">("contact")
+  const [step, setStep] = useState<"contact" | "survey" | "success" | "loading">("survey")
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [userData, setUserData] = useState<UserData>({ name: "", phone: "", city: "" })
   const [answers, setAnswers] = useState<Record<string, string>>({})
@@ -75,17 +75,18 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
 
       { id: "pain", question: "Чи є у Вас біль під час сну", type: "radio", options: ["так", "ні"], required: true, showIf: a => a["audience"] === "Дорослий" },
       { id: "pain_area", question: "Де саме болить?", type: "radio", options: ["поперек","шийний відділ","грудний відділ","давить в плече","просто вся спина","свій варіант"], required: true, showIf: a => a["audience"] === "Дорослий" && a["pain"] === "так" },
-      { id: "health_issues", question: "Чи є у Вас проблеми зі здоров'ям? (вкажіть)", type: "text", required: false, showIf: a => a["audience"] === "Дорослий" },
+      { id: "pain_custom", question: "опишіть конкретно свій біль або дискомфорт", type: "text", required: true, showIf: a => a["audience"] === "Дорослий" && a["pain_area"] === "свій варіант" },
+      { id: "health_issues", question: "Чи є у вас проблеми зі здоров'ям, якщо так, то опишіть конкретно які", type: "text", required: false, showIf: a => a["audience"] === "Дорослий" },
 
       { id: "current_mattress", question: "На якому матраці Ви спите зараз?", type: "radio", options: ["пружинний","безпружинний","інше (впишіть)"] , required: true, showIf: a => a["audience"] === "Дорослий" },
       { id: "current_mattress_name", question: "Якщо знаєте назву – впишіть", type: "text", required: false, showIf: a => a["audience"] === "Дорослий" && a["current_mattress"] === "інше (впишіть)" },
 
-      { id: "dissatisfaction", question: "Що саме Вас не влаштовує?", type: "radio", options: ["просів","твердий","м'який","просто не зручний","провалююсь","свій варіант"], required: true, showIf: a => a["audience"] === "Дорослий" },
+      { id: "dissatisfaction", question: "Що саме вас не влаштовує в матраці на якому спите зараз", type: "radio", options: ["просів","твердий","м'який","просто не зручний","провалююсь","свій варіант"], required: true, showIf: a => a["audience"] === "Дорослий" },
       { id: "firmness", question: "Вам зручніше спати на м'якому чи твердому?", type: "radio", options: ["м’який","твердий","мабуть середній"], required: true, showIf: a => a["audience"] === "Дорослий" },
       { id: "pillow", question: "На якій подушці любите спати?", type: "radio", options: ["меморі","пух","висока","маленька","сплю без подушки"], required: true, showIf: a => a["audience"] === "Дорослий" },
       { id: "base", question: "На чому має лежати матрац", type: "radio", options: ["ламельний каркас","тверда основа ліжка","на іншому матраці","на підлозі"], required: true, showIf: a => a["audience"] === "Дорослий" },
       { id: "spring_pref", question: "Віддаєте перевагу пружинним чи безпружинним?", type: "radio", options: ["тільки пружинні","тільки безпружинні","головне щоб комфортно було"], required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "adult_extra", question: "Особливості вашого тіла / запитання (необов'язково)", type: "text", required: false, showIf: a => a["audience"] === "Дорослий" },
+      { id: "adult_extra", question: "Особливості Вашого тіла, або Ваші запитання", type: "text", required: false, showIf: a => a["audience"] === "Дорослий" },
 
       // Дитина
       { id: "child_age", question: "Скільки років дитині", type: "number", required: true, showIf: a => a["audience"] === "Дитина" },
@@ -95,7 +96,7 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
       { id: "child_health_other", question: "Вкажіть точний діагноз", type: "text", required: false, showIf: a => a["audience"] === "Дитина" && a["child_health"] === "інше (пропишіть)" },
       { id: "child_current_mattress", question: "На чому спить дитина зараз?", type: "radio", options: ["пружинний","безпружинний","диван","люлька","інше (впишіть)"], required: true, showIf: a => a["audience"] === "Дитина" },
       { id: "child_current_name", question: "Назва/модель (за бажанням)", type: "text", required: false, showIf: a => a["audience"] === "Дитина" },
-      { id: "child_dissatisfaction", question: "Що саме не влаштовує?", type: "radio", options: ["просів","твердий","м'який","дитині не зручний","свій варіант","далі"], required: true, showIf: a => a["audience"] === "Дитина" },
+      { id: "child_dissatisfaction", question: "що конкретно не влаштовує зараз під час сну", type: "radio", options: ["просів","твердий","м'який","дитині не зручний","свій варіант","далі"], required: true, showIf: a => a["audience"] === "Дитина" },
       { id: "child_base", question: "На чому має лежати матрац", type: "radio", options: ["ламельний каркас","тверда основа ліжка","на іншому матраці","на підлозі"], required: true, showIf: a => a["audience"] === "Дитина" },
       { id: "child_extra", question: "Особливості дитини / запитання (необов'язково)", type: "text", required: false, showIf: a => a["audience"] === "Дитина" },
 
@@ -123,7 +124,7 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (userData.name && userData.phone && userData.city) {
-      setStep("survey")
+      handleSubmit()
     }
   }
 
@@ -136,7 +137,7 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
     if (pos >= 0 && pos < visibleIndexes.length - 1) {
       setCurrentQuestionIndex(visibleIndexes[pos + 1])
     } else {
-      handleSubmit()
+      setStep("contact")
     }
   }
 
@@ -144,8 +145,13 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
     const pos = visibleIndexes.indexOf(currentIndexSafe)
     if (pos > 0) {
       setCurrentQuestionIndex(visibleIndexes[pos - 1])
-    } else {
-      setStep("contact")
+    }
+  }
+
+  const goBackFromContact = () => {
+    setStep("survey")
+    if (visibleIndexes.length > 0) {
+      setCurrentQuestionIndex(visibleIndexes[visibleIndexes.length - 1])
     }
   }
 
@@ -201,13 +207,13 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
       <DialogContent className="w-[min(480px,calc(100vw-2rem))] sm:max-w-[460px] max-h-[85vh] overflow-y-auto p-4 sm:p-6" aria-describedby="survey-dialog-description">
         <DialogHeader>
           <DialogTitle className="text-xl md:text-2xl text-center">
-            {step === "contact" ? "Ваші контактні дані" : step === "survey" ? "Опитування" : "Дякуємо!"}
+            {step === "survey" ? "Опитування" : step === "contact" ? "Ваші контактні дані" : "Дякуємо!"}
           </DialogTitle>
           <p id="survey-dialog-description" className="sr-only">
-            {step === "contact"
-              ? "Форма для введення ваших контактних даних для опитування щодо підбору матраца"
-              : step === "survey"
+            {step === "survey"
               ? "Опитування для підбору ідеального матраца на основі ваших параметрів"
+              : step === "contact"
+              ? "Форма для введення ваших контактних даних після завершення опитування"
               : "Дякуємо за участь в опитуванні!"}
           </p>
         </DialogHeader>
@@ -226,7 +232,12 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
               <Label htmlFor="city">Місто/Селище</Label>
               <Input id="city" className="w-full" value={userData.city} onChange={(e) => setUserData({ ...userData, city: e.target.value })} required />
             </div>
-            <Button type="submit" className="w-full">Почати опитування</Button>
+            <div className="flex justify-between pt-2">
+              <Button type="button" variant="outline" onClick={goBackFromContact}>Назад</Button>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Відправка...</> : "Відправити"}
+              </Button>
+            </div>
           </form>
         )}
 
@@ -275,7 +286,7 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
             </div>
 
             <div className="flex justify-between pt-2">
-              <Button variant="outline" onClick={goToPrevVisible}>Назад</Button>
+              <Button variant="outline" onClick={goToPrevVisible} disabled={visibleIndexes.indexOf(currentIndexSafe) === 0}>Назад</Button>
               <Button onClick={goToNextVisible} disabled={!isCurrentValid}>Далі</Button>
             </div>
           </div>

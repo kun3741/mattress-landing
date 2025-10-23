@@ -187,7 +187,7 @@ function HomePage() {
               
               <ScrollAnimation animation="fadeUp" delay={200}>
                 <p className="text-base md:text-lg lg:text-xl text-muted-foreground text-pretty max-w-2xl mx-auto lg:mx-0 px-2">
-                  {hero?.subtitle || "Професійний алгоритмічний підбір матрацу з урахуванням ваших індивідуальних особливостей. Співпраця з 12 провідними фабриками України."}
+                  {hero?.subtitle || "Програма \"Тарас\" рекомендує лише ті матраци які підійдуть Вам. Не рекламуючи жодного конкретного виробника"}
                 </p>
               </ScrollAnimation>
 
@@ -250,7 +250,7 @@ function HomePage() {
             </ScrollAnimation>
             <ScrollAnimation animation="fadeUp" delay={300}>
               <p className="text-base md:text-lg text-muted-foreground text-pretty max-w-2xl mx-auto px-2">
-                {cta?.subtitle || "Пройдіть швидкий тест, і наш експерт зв'яжеться з вами з персональними рекомендаціями"}
+                {cta?.subtitle || "Серед тисячі ймовірних варіантів матраців програма \"Тарас\" зменшить кількість до 5-ти. А наш менеджер допоможе зробити остаточний вибір. Довірте свій сон професіоналам і супер програмі \"Тарас\""}
               </p>
             </ScrollAnimation>
             <ScrollAnimation animation="scale" delay={400}>
@@ -277,29 +277,6 @@ function HomePage() {
       {/* Sleep divider */}
       <SleepDivider />
 
-      {/* Footer */}
-      <footer className="border-t bg-white/80 backdrop-blur-sm mt-12 md:mt-16">
-        <ScrollAnimation animation="fadeUp" delay={100}>
-          <div className="container mx-auto px-4 py-6 md:py-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-              <p className="text-xs md:text-sm text-muted-foreground">{footer?.copyright || "© 2025 Підбір Матрацу. Всі права захищені. 💤"}</p>
-              <div className="flex gap-4">
-                <ButtonHover>
-                  <Button variant="ghost" size="sm" onClick={() => openInfoDialog("contacts")} className="whitespace-normal text-center leading-tight">
-                    {footer?.contacts || "Контакти"}
-                  </Button>
-                </ButtonHover>
-                <ButtonHover>
-                  <Button variant="ghost" size="sm" onClick={() => openInfoDialog("factories")} className="whitespace-normal text-center leading-tight">
-                    {footer?.partners || "Партнери"}
-                  </Button>
-                </ButtonHover>
-              </div>
-            </div>
-          </div>
-        </ScrollAnimation>
-      </footer>
-
       {/* Survey Modal */}
       <SurveyModal open={surveyOpen} onOpenChange={setSurveyOpen} />
 
@@ -313,7 +290,7 @@ function HomePage() {
             {(infoDialogs?.benefits?.content || [
               { title: "Економія часу", description: "Замість того, щоб витрачати дні на відвідування магазинів і вивчення характеристик, ви отримаєте персональні рекомендації за 5 хвилин." },
               { title: "Професійний алгоритм", description: "Наш алгоритм враховує вашу вагу, зріст, позу сну, проблеми зі здоров'ям та інші важливі фактори для ідеального підбору." },
-              { title: "Широкий вибір", description: "Співпраця з 12 провідними фабриками дає доступ до сотень моделей матраців різних цінових категорій." },
+              { title: "Широкий вибір", description: "Програма не рекомендує конкретного виробника. Тип матрацу і фірма обираються виключно по Ваших характеристиках" },
               { title: "Експертна підтримка", description: "Після тесту з вами зв'яжеться наш експерт, який відповість на всі питання та допоможе зробити остаточний вибір." }
             ]).map((item, index) => {
               const icons = [Clock, CheckCircle2, Factory, Users]
@@ -404,6 +381,30 @@ function HomePage() {
           </div>
         }
       />
+
+      {/* Bottom CTA Section */}
+      <section className="container mx-auto px-4 py-8 md:py-10">
+        <ScrollAnimation animation="scale" delay={100}>
+          <div className="max-w-4xl mx-auto luxury-border rounded-xl md:rounded-2xl p-6 md:p-8 text-center space-y-4 premium-shadow bg-white/90 backdrop-blur-sm">
+            <ScrollAnimation animation="fadeUp" delay={200}>
+              <h3 className="text-2xl md:text-3xl font-bold">
+                Готові знайти ідеальний матрац? 🌙
+              </h3>
+            </ScrollAnimation>
+            <ScrollAnimation animation="scale" delay={300}>
+              <ButtonHover>
+                <Button
+                  size="lg"
+                  className="text-base md:text-lg px-6 py-5 md:px-8 md:py-6 h-auto w-full sm:w-auto premium-shadow gold-accent text-white font-semibold animate-mattress-bounce hover:opacity-90 transition-opacity whitespace-normal text-center leading-tight"
+                  onClick={() => setSurveyOpen(true)}
+                >
+                  Підібрати матрац за допомогою програми
+                </Button>
+              </ButtonHover>
+            </ScrollAnimation>
+          </div>
+        </ScrollAnimation>
+      </section>
 
       {/* Footer */}
       <ContactsFooter />
