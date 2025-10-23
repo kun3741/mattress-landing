@@ -187,7 +187,7 @@ function HomePage() {
               
               <ScrollAnimation animation="fadeUp" delay={200}>
                 <p className="text-base md:text-lg lg:text-xl text-muted-foreground text-pretty max-w-2xl mx-auto lg:mx-0 px-2">
-                  {hero?.subtitle || "Програма \"Тарас\" рекомендує лише ті матраци які підійдуть Вам. Не рекламуючи жодного конкретного виробника"}
+                  {hero?.subtitle || "Професійний алгоритмічний підбір матрацу з урахуванням ваших індивідуальних особливостей. Програма \"Тарас\" рекомендує лише ті матраци які підійдуть Вам. Не рекламуючи жодного конкретного виробника."}
                 </p>
               </ScrollAnimation>
 
