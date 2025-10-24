@@ -87,13 +87,48 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
   return (
     <div className="w-full">
       <ScrollAnimation animation="fadeUp" delay={100}>
-        <div className="bg-white/90 backdrop-blur-sm luxury-border rounded-xl md:rounded-2xl premium-shadow overflow-hidden">          {/* Video Container */}
-          <div className="relative aspect-[16/9] md:aspect-[3/4] bg-gray-100 max-w-full md:max-w-[240px] lg:max-w-[260px] mx-auto md:mt-4">
-            {videoError ? (
+        <div className="bg-white/90 backdrop-blur-sm luxury-border rounded-xl md:rounded-2xl premium-shadow overflow-hidden">
+          {/* Video/Description Container - dynamic width, fixed height */}
+          <div className={`relative bg-gray-100 max-w-full mx-auto md:mt-4 transition-all duration-300 overflow-hidden ${
+            showDescription 
+              ? 'aspect-[16/9] md:aspect-[16/9] md:max-w-full md:h-[320px]' 
+              : 'aspect-[16/9] md:aspect-[3/4] md:max-w-[240px] lg:max-w-[260px] md:h-[320px]'
+          }`}>
+            {showDescription ? (
+              // Description replaces video
+              <div className="absolute inset-0 overflow-y-auto bg-white p-3 md:p-4">
+                <div className="max-w-none h-full text-xs leading-relaxed text-center">
+                  {(content?.video?.description || `Вітаю мене звати Тарас! 🎬
+
+Якщо ви дивитесь це відео, то ви вже на правильному шляху до знаходження свого ідеального матрацу! 
+
+За 5 хвилин я покажу вам, як працює наша унікальна програма підбору матрацу, яка враховує всі ваші індивідуальні особливості.
+
+🔍 Що ми робимо:
+• Аналізуємо вашу вагу, зріст та сон
+• Враховуємо медичні показання
+• Підбираємо оптимальну жорсткість
+• Вибираємо найкращий матеріал
+
+💡 Чому це працює:
+Наша програма розроблена спільно з лікарями-ортопедами та базується на 15-річному досвіді роботи з матрацами.
+
+🎯 Результат:
+Ви отримаєте персональні рекомендації від нашого експерта, який зв'яжеться з вами протягом 24 годин.
+
+Готові розпочати? Натисніть кнопку нижче та пройдіть швидкий тест!`).split('\n\n').map((paragraph: string, index: number) => (
+                    <p key={index} className="mb-2">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            ) : videoError ? (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
                 <div className="text-center space-y-4">
                   <Video className="w-16 h-16 text-gray-400 mx-auto" />
-                  <p className="text-gray-500">Відео тимчасово недоступне</p>                  <button 
+                  <p className="text-gray-500">Відео тимчасово недоступне</p>
+                  <button 
                     onClick={retryVideo}
                     className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors"
                   >
@@ -102,7 +137,8 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
                 </div>
               </div>
             ) : (
-              <>                <video
+              <>
+                <video
                   ref={videoRef}
                   className="w-full h-full object-cover"
                   poster={isMobile ? "/preview-pc.png" : "/preview-mobile.png"}
@@ -116,7 +152,8 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
                   x-webkit-airplay="allow"
                   controls={false}
                   muted
-                  crossOrigin="anonymous">{isMobile ? (
+                  crossOrigin="anonymous">
+                  {isMobile ? (
                     <>
                       <source src="/video-pc.mp4" type="video/mp4" />
                       <source src="/taras-intro.mp4" type="video/mp4" />
@@ -154,7 +191,7 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
             )}
           </div>
           
-          {/* Video Caption */}
+          {/* Video Caption - fixed height to prevent layout shift */}
           <div className="p-3 md:p-3 lg:p-4 text-center space-y-1.5 md:space-y-2">
             <h3 className="text-base md:text-lg lg:text-xl font-bold">
               {content?.video?.ctaTitle || "Як працює наша програма підбору?"}
@@ -170,8 +207,17 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
               onClick={() => setShowDescription(!showDescription)}
               className="text-primary hover:text-primary/80 whitespace-normal text-center leading-tight"
             >
-              <BookOpen className="w-4 h-4 mr-2" />
-              {showDescription ? "Приховати опис" : "Читати повний опис"}
+              {showDescription ? (
+                <>
+                  <Play className="w-4 h-4 mr-2" />
+                  Показати відео
+                </>
+              ) : (
+                <>
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Читати повний опис
+                </>
+              )}
             </Button>
             
             {/* CTA Button in video block */}
@@ -184,36 +230,6 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
                 >
                   {ctaButtonText}
                 </Button>
-              </div>
-            )}
-            
-            {showDescription && (
-              <div className="mt-6 pt-6 border-t">
-                <div className="prose prose-sm max-w-none text-justify">
-                  {(content?.video?.description || `Вітаю мене звати Тарас! 🎬
-
-Якщо ви дивитесь це відео, то ви вже на правильному шляху до знаходження свого ідеального матрацу! 
-
-За 5 хвилин я покажу вам, як працює наша унікальна програма підбору матрацу, яка враховує всі ваші індивідуальні особливості.
-
-🔍 Що ми робимо:
-• Аналізуємо вашу вагу, зріст та сон
-• Враховуємо медичні показання
-• Підбираємо оптимальну жорсткість
-• Вибираємо найкращий матеріал
-
-💡 Чому це працює:
-Наша програма розроблена спільно з лікарями-ортопедами та базується на 15-річному досвіді роботи з матрацами.
-
-🎯 Результат:
-Ви отримаєте персональні рекомендації від нашого експерта, який зв'яжеться з вами протягом 24 годин.
-
-Готові розпочати? Натисніть кнопку нижче та пройдіть швидкий тест!`).split('\n\n').map((paragraph: string, index: number) => (
-                    <p key={index} className="text-justify">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
               </div>
             )}
           </div>
