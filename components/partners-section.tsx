@@ -143,27 +143,15 @@ export function PartnersSection() {
     (f) => f && f.logo !== "/1 logo 10.png" && ((f.name || "").toLowerCase() !== "brand 1")
   )
   
-  // Priority partners that should be shown first (case-insensitive)
-  const priorityPartners = ["adormo", "magniflex", "artist"]
-  
-  // Sort partners: priority partners first, then others
+  // Sort partners: priority partners first (based on isPriority flag), then others
   const partners = allPartners.sort((a, b) => {
-    const nameA = getDisplayName(a).toLowerCase()
-    const nameB = getDisplayName(b).toLowerCase()
-    
-    const isPriorityA = priorityPartners.some(p => nameA.includes(p))
-    const isPriorityB = priorityPartners.some(p => nameB.includes(p))
+    const isPriorityA = !!a.isPriority
+    const isPriorityB = !!b.isPriority
     
     if (isPriorityA && !isPriorityB) return -1
     if (!isPriorityA && isPriorityB) return 1
     
-    // Within priority group, sort by priority order
-    if (isPriorityA && isPriorityB) {
-      const indexA = priorityPartners.findIndex(p => nameA.includes(p))
-      const indexB = priorityPartners.findIndex(p => nameB.includes(p))
-      return indexA - indexB
-    }
-    
+    // Keep original order within same priority level
     return 0
   })
   if (partners.length === 0) {

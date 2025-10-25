@@ -132,15 +132,25 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
       // (видалено дублікати "city" та "phone_confirm")
     ]
     
-    // Merge loaded questions with default questions to update texts
+    // Merge loaded questions with default questions to update texts and logic
     if (loadedQuestions.length > 0) {
       return q.map(defaultQ => {
         const loaded = getLoadedQuestion(defaultQ.id)
         if (loaded) {
+          // Створюємо нову функцію showIf з даних бази
+          let newShowIf = defaultQ.showIf
+          if (loaded.showIfQuestionId && loaded.showIfValue) {
+            newShowIf = (answers: Record<string, string>) => {
+              return answers[loaded.showIfQuestionId] === loaded.showIfValue
+            }
+          }
+          
           return {
             ...defaultQ,
             question: loaded.question || defaultQ.question,
             options: loaded.options || defaultQ.options,
+            required: loaded.required !== undefined ? loaded.required : defaultQ.required,
+            showIf: newShowIf
           }
         }
         return defaultQ

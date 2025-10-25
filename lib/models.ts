@@ -7,6 +7,10 @@ export interface SurveyQuestion {
   question_type: 'single' | 'multiple' | 'text' | 'number' | 'select' | 'radio'
   options?: string[]
   next_question_logic?: Record<string, any>
+  show_if_logic?: {
+    question_id: string  // ID питання від якого залежить показ
+    answer_value: string // Значення відповіді для показу
+  }
   order_index: number
   required?: boolean
   created_at?: Date

@@ -37,6 +37,7 @@ export interface SiteContent {
   factories: Array<{
     name: string
     logo: string
+    isPriority?: boolean
   }>
   navigation: {
     benefits: string
@@ -141,6 +142,9 @@ export const defaultContent: SiteContent = {
     address: "Київ, Україна",
   },
   factories: [
+    { name: 'Adormo', logo: '/logo-2-400x164.png', isPriority: true },
+    { name: 'Magniflex', logo: '/logo-magniflex.png', isPriority: true },
+    { name: 'Artist', logo: '/logo-kolektsii-dlya-sajtu.150x100.jpg', isPriority: true },
     { name: 'Come-for', logo: '/come-for.png' },
     { name: 'EMM', logo: '/emm.150x100.jpg' },
     { name: 'Evolution', logo: '/evolution_2024.150x100.jpg' },
@@ -156,10 +160,7 @@ export const defaultContent: SiteContent = {
     { name: 'Belsonno', logo: '/logo_belsonno_150x100.150x100.png' },
     { name: 'Palmera', logo: '/logo_palmera.150x100.jpg' },
     { name: 'Matro Lux', logo: '/Logo_ukr.jpg' },
-    { name: 'Adormo', logo: '/logo-2-400x164.png' },
     { name: 'Belsonno Pure', logo: '/logo-belsonno-pure-01-1-150x37.png' },
-    { name: 'Artist', logo: '/logo-kolektsii-dlya-sajtu.150x100.jpg' },
-    { name: 'Magniflex', logo: '/logo-magniflex.png' },
   ],
   navigation: {
     benefits: "Переваги",

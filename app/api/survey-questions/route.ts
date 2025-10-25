@@ -34,6 +34,8 @@ export async function GET() {
       type: q.question_type === 'single' ? 'radio' : q.question_type,
       options: q.options || [],
       required: q.required !== false,
+      showIfQuestionId: q.show_if_logic?.question_id || '',
+      showIfValue: q.show_if_logic?.answer_value || '',
     }))
 
     return NextResponse.json(formattedQuestions)
@@ -78,6 +80,10 @@ export async function POST(request: NextRequest) {
       question_type: q.type,
       options: q.options || null,
       required: q.required !== false,
+      show_if_logic: q.showIf ? {
+        question_id: q.showIf.questionId,
+        answer_value: q.showIf.value
+      } : null,
       next_question_logic: {},
       order_index: index + 1,
       created_at: new Date(),

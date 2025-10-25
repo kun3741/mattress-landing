@@ -119,13 +119,22 @@ function AdminPageContent() {
       if (questionsDirty) {
         // Конвертуємо optionsInputs назад в масиви перед збереженням
         const questionsToSave = questions.map((q, index) => {
+          const questionData: any = { ...q }
+          
+          // Додаємо опції
           if (optionsInputs[index]) {
-            return {
-              ...q,
-              options: optionsInputs[index].split(",").map((s: string) => s.trim()).filter(Boolean)
+            questionData.options = optionsInputs[index].split(",").map((s: string) => s.trim()).filter(Boolean)
+          }
+          
+          // Додаємо умовну логіку
+          if (q.showIfQuestionId && q.showIfValue) {
+            questionData.showIf = {
+              questionId: q.showIfQuestionId,
+              value: q.showIfValue
             }
           }
-          return q
+          
+          return questionData
         })
         
         const resp2 = await fetch("/api/survey-questions", {
@@ -506,35 +515,76 @@ function AdminPageContent() {
                         </Button>
                       </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
-                      <div className="space-y-2">
-                        <Label>Текст питання</Label>
-                        <Input
-                          value={question.question || ""}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "question", e.target.value)}
-                        />
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                          <Label>ID питання</Label>
+                          <Input
+                            value={question.id || ""}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "id", e.target.value)}
+                            placeholder="unique_id"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Текст питання</Label>
+                          <Input
+                            value={question.question || ""}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "question", e.target.value)}
+                          />
+                        </div>
                       </div>
-                      <div className="space-y-2">
-                        <Label>Тип питання</Label>
-                        <select
-                          className="w-full p-2 border rounded-md"
-                          value={question.type || "radio"}
-                          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => updateQuestion(index, "type", e.target.value)}
-                        >
-                          <option value="radio">Вибір одного варіанту</option>
-                          <option value="select">Випадаючий список</option>
-                          <option value="number">Число</option>
-                          <option value="text">Текст</option>
-                        </select>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+                        <div className="space-y-2">
+                          <Label>Тип питання</Label>
+                          <select
+                            className="w-full p-2 border rounded-md"
+                            value={question.type || "radio"}
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => updateQuestion(index, "type", e.target.value)}
+                          >
+                            <option value="radio">Вибір одного варіанту</option>
+                            <option value="select">Випадаючий список</option>
+                            <option value="number">Число</option>
+                            <option value="text">Текст</option>
+                          </select>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <input
+                            id={`req_${index}`}
+                            type="checkbox"
+                            checked={!!question.required}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "required", e.target.checked)}
+                          />
+                          <Label htmlFor={`req_${index}`}>Обов'язкове</Label>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <input
-                          id={`req_${index}`}
-                          type="checkbox"
-                          checked={!!question.required}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "required", e.target.checked)}
-                        />
-                        <Label htmlFor={`req_${index}`}>Обов'язкове</Label>
+                      
+                      {/* Умовна логіка показу */}
+                      <div className="border-t pt-3 mt-3">
+                        <Label className="text-sm font-medium mb-2 block">Умовна логіка (показувати якщо...)</Label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div className="space-y-2">
+                            <Label className="text-xs">ID питання</Label>
+                            <Input
+                              value={question.showIfQuestionId || ""}
+                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "showIfQuestionId", e.target.value)}
+                              placeholder="audience"
+                              className="text-sm"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label className="text-xs">Значення відповіді</Label>
+                            <Input
+                              value={question.showIfValue || ""}
+                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "showIfValue", e.target.value)}
+                              placeholder="Дорослий"
+                              className="text-sm"
+                            />
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Залиште порожнім для показу завжди. Приклад: audience = "Дорослий"
+                        </p>
                       </div>
                     </div>
                     {(question.type === "radio" || question.type === "select") && (
@@ -604,7 +654,43 @@ function AdminPageContent() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {content.factories.map((factory: any, index: number) => (
                     <div key={index} className="p-3 border rounded-lg space-y-2">
-                      <Label>Виробник {index + 1}</Label>
+                      <div className="flex justify-between items-center">
+                        <Label>Виробник {index + 1}</Label>
+                        <div className="flex gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              if (index === 0) return
+                              const newFactories = [...content.factories]
+                              const temp = newFactories[index - 1]
+                              newFactories[index - 1] = newFactories[index]
+                              newFactories[index] = temp
+                              updateContent("factories", newFactories)
+                            }}
+                            disabled={index === 0}
+                            title="Перемістити вгору"
+                          >
+                            <ArrowUp className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              if (index === content.factories.length - 1) return
+                              const newFactories = [...content.factories]
+                              const temp = newFactories[index + 1]
+                              newFactories[index + 1] = newFactories[index]
+                              newFactories[index] = temp
+                              updateContent("factories", newFactories)
+                            }}
+                            disabled={index === content.factories.length - 1}
+                            title="Перемістити вниз"
+                          >
+                            <ArrowDown className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </div>
                       <Input
                         value={factory.name}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -623,6 +709,19 @@ function AdminPageContent() {
                         }}
                         placeholder="Шлях до логотипу"
                       />
+                      <div className="flex items-center gap-2">
+                        <input
+                          id={`priority_${index}`}
+                          type="checkbox"
+                          checked={!!factory.isPriority}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            const newFactories = [...content.factories]
+                            newFactories[index].isPriority = e.target.checked
+                            updateContent("factories", newFactories)
+                          }}
+                        />
+                        <Label htmlFor={`priority_${index}`} className="text-sm">Пріоритетний партнер</Label>
+                      </div>
                     </div>
                   ))}
                 </div>
