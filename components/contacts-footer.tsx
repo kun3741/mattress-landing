@@ -41,7 +41,7 @@ export function ContactsFooter() {
     return (
       <footer className="bg-gray-900 text-white py-8 md:py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+          <div className="flex flex-col md:flex-row justify-center gap-6 text-center md:text-left">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="space-y-2">
                 <Skeleton className="h-5 w-24 mx-auto md:mx-0 bg-gray-700" />
@@ -61,7 +61,7 @@ export function ContactsFooter() {
   return (
     <footer className="bg-gray-900 text-white py-8 md:py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+        <div className="flex flex-col md:flex-row justify-center gap-6 text-center md:text-left">
           <div className="space-y-2">
             <div className="flex items-center justify-center md:justify-start gap-2">
               <Phone className="w-4 h-4 text-blue-400" />
@@ -110,3 +110,4 @@ export function ContactsFooter() {
     </footer>
   )
 }
+
