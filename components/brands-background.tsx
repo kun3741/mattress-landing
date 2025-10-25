@@ -4,7 +4,6 @@ import Image from "next/image"
 
 export function BrandsBackground() {
   const logos = [
-    { src: "/1 logo 10.png", alt: "Brand 1" },
     { src: "/come-for.png", alt: "Come-for" },
     { src: "/emm.150x100.jpg", alt: "EMM" },
     { src: "/evolution_2024.150x100.jpg", alt: "Evolution" },
@@ -43,10 +42,17 @@ export function BrandsBackground() {
 
         .brand-logo {
           position: absolute;
-          opacity: 0.035; /* slightly lower and static */
-          filter: grayscale(100%) brightness(0.8);
+          opacity: 0.07; /* slightly more visible */
+          filter: grayscale(100%) brightness(0.9);
           pointer-events: none;
           transition: filter 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+          .brand-logo {
+            opacity: 0.12; /* more visible on mobile */
+            filter: grayscale(100%) brightness(1.1);
+          }
         }
       `}</style>
       <div className="brands-bg">

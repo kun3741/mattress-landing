@@ -370,13 +370,15 @@ function HomePage() {
                   <p className="text-muted-foreground">{contacts?.email || "info@mattress-selection.ua"}</p>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-primary mt-0.5" />
-                <div>
-                  <p className="font-semibold">Адреса</p>
-                  <p className="text-muted-foreground">{contacts?.address || "Київ, Україна"}</p>
+              {contacts?.address && contacts.address.trim() && (
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-primary mt-0.5" />
+                  <div>
+                    <p className="font-semibold">Адреса</p>
+                    <p className="text-muted-foreground">{contacts.address}</p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         }

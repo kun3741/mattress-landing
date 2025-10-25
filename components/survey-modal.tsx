@@ -108,7 +108,8 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
       { id: "current_mattress_name", question: "Якщо знаєте назву – впишіть", type: "text", required: false, showIf: a => a["audience"] === "Дорослий" && a["current_mattress"] === "інше (впишіть)" },
 
       { id: "dissatisfaction", question: "Що саме Вас не влаштовує в матраці на якому спите зараз", type: "radio", options: ["просів","твердий","м'який","просто не зручний","провалююсь","свій варіант"], required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "firmness", question: "Вам зручніше спати на м'якому чи твердому?", type: "radio", options: ["м’який","твердий","мабуть середній"], required: true, showIf: a => a["audience"] === "Дорослий" },
+      { id: "dissatisfaction_custom", question: "Напишіть що конкретно Вас не влаштовує в матраці чи дивані на якому спите зараз", type: "text", required: true, showIf: a => a["audience"] === "Дорослий" && a["dissatisfaction"] === "свій варіант" },
+      { id: "firmness", question: "Вам зручніше спати на м'якому чи твердому?", type: "radio", options: ["м'який","твердий","мабуть середній"], required: true, showIf: a => a["audience"] === "Дорослий" },
       { id: "pillow", question: "На якій подушці любите спати?", type: "radio", options: ["меморі","пух","висока","маленька","сплю без подушки"], required: true, showIf: a => a["audience"] === "Дорослий" },
       { id: "base", question: "На чому має лежати матрац", type: "radio", options: ["ламельний каркас","тверда основа ліжка","на іншому матраці","на підлозі"], required: true, showIf: a => a["audience"] === "Дорослий" },
       { id: "spring_pref", question: "Віддаєте перевагу пружинним чи безпружинним?", type: "radio", options: ["тільки пружинні","тільки безпружинні","головне щоб комфортно було"], required: true, showIf: a => a["audience"] === "Дорослий" },
@@ -123,6 +124,7 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
       { id: "child_current_mattress", question: "На чому спить дитина зараз?", type: "radio", options: ["пружинний","безпружинний","диван","люлька","інше (впишіть)"], required: true, showIf: a => a["audience"] === "Дитина" },
       { id: "child_current_name", question: "Назва/модель (за бажанням)", type: "text", required: false, showIf: a => a["audience"] === "Дитина" },
       { id: "child_dissatisfaction", question: "Що конкретно не влаштовує зараз під час сну", type: "radio", options: ["просів","твердий","м'який","дитині не зручний","свій варіант","далі"], required: true, showIf: a => a["audience"] === "Дитина" },
+      { id: "child_dissatisfaction_custom", question: "Напишіть що конкретно не влаштовує в матраці чи дивані на якому спить дитина зараз", type: "text", required: true, showIf: a => a["audience"] === "Дитина" && a["child_dissatisfaction"] === "свій варіант" },
       { id: "child_base", question: "На чому має лежати матрац", type: "radio", options: ["ламельний каркас","тверда основа ліжка","на іншому матраці","на підлозі"], required: true, showIf: a => a["audience"] === "Дитина" },
       { id: "child_extra", question: "Особливості дитини / запитання (необов'язково)", type: "text", required: false, showIf: a => a["audience"] === "Дитина" },
 

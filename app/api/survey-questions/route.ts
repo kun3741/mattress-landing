@@ -77,6 +77,7 @@ export async function POST(request: NextRequest) {
       question_text: q.question,
       question_type: q.type,
       options: q.options || null,
+      required: q.required !== false,
       next_question_logic: {},
       order_index: index + 1,
       created_at: new Date(),

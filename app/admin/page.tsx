@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
-import { Loader2, Save, Plus, Trash2, ArrowLeft, RefreshCw, LogOut } from "lucide-react"
+import { Loader2, Save, Plus, Trash2, ArrowLeft, RefreshCw, LogOut, ArrowUp, ArrowDown } from "lucide-react"
 import Link from "next/link"
 import type { SiteContent } from "@/lib/content-data"
 import type { SurveyQuestion } from "@/lib/survey-data"
@@ -195,6 +195,42 @@ function AdminPageContent() {
     const newQuestions = [...questions]
     newQuestions[index] = { ...newQuestions[index], [field]: value }
     setQuestions(newQuestions)
+    setQuestionsDirty(true)
+  }
+
+  const moveQuestionUp = (index: number) => {
+    if (index === 0) return
+    const newQuestions = [...questions]
+    const temp = newQuestions[index - 1]
+    newQuestions[index - 1] = newQuestions[index]
+    newQuestions[index] = temp
+    
+    // Також міняємо місцями optionsInputs
+    const newOptionsInputs = { ...optionsInputs }
+    const tempOptions = newOptionsInputs[index - 1]
+    newOptionsInputs[index - 1] = newOptionsInputs[index]
+    newOptionsInputs[index] = tempOptions
+    
+    setQuestions(newQuestions)
+    setOptionsInputs(newOptionsInputs)
+    setQuestionsDirty(true)
+  }
+
+  const moveQuestionDown = (index: number) => {
+    if (index === questions.length - 1) return
+    const newQuestions = [...questions]
+    const temp = newQuestions[index + 1]
+    newQuestions[index + 1] = newQuestions[index]
+    newQuestions[index] = temp
+    
+    // Також міняємо місцями optionsInputs
+    const newOptionsInputs = { ...optionsInputs }
+    const tempOptions = newOptionsInputs[index + 1]
+    newOptionsInputs[index + 1] = newOptionsInputs[index]
+    newOptionsInputs[index] = tempOptions
+    
+    setQuestions(newQuestions)
+    setOptionsInputs(newOptionsInputs)
     setQuestionsDirty(true)
   }
 
@@ -446,9 +482,29 @@ function AdminPageContent() {
                   <div key={question.id} className="p-4 border rounded-lg space-y-3">
                     <div className="flex justify-between items-start">
                       <Label className="text-base font-semibold">Питання {index + 1}</Label>
-                      <Button variant="ghost" size="sm" onClick={() => deleteQuestion(index)}>
-                        <Trash2 className="w-4 h-4 text-destructive" />
-                      </Button>
+                      <div className="flex gap-1">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => moveQuestionUp(index)}
+                          disabled={index === 0}
+                          title="Перемістити вгору"
+                        >
+                          <ArrowUp className="w-4 h-4" />
+                        </Button>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => moveQuestionDown(index)}
+                          disabled={index === questions.length - 1}
+                          title="Перемістити вниз"
+                        >
+                          <ArrowDown className="w-4 h-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => deleteQuestion(index)} title="Видалити">
+                          <Trash2 className="w-4 h-4 text-destructive" />
+                        </Button>
+                      </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
                       <div className="space-y-2">

@@ -197,9 +197,13 @@ export function VideoDescriptionToggle({ onSurveyOpen, ctaButtonText }: VideoDes
               {content?.video?.ctaTitle || "Як працює наша програма підбору?"}
             </h3>
             
-            <p className="text-xs md:text-sm lg:text-base text-muted-foreground">
-              {content?.video?.ctaSubtitle || "Подивіться коротке відео і дізнайтесь, як за 5 хвилин знайти ідеальний матрац для себе."}
-            </p>
+            <div className="text-xs md:text-sm lg:text-base text-muted-foreground space-y-2">
+              {(content?.video?.ctaSubtitle || "Подивіться коротке відео і дізнайтесь, як за 5 хвилин знайти ідеальний матрац для себе.").split('\n\n').map((paragraph: string, index: number) => (
+                <p key={index}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
             
             <Button
               variant="ghost"

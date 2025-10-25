@@ -88,15 +88,17 @@ export function ContactsFooter() {
             </a>
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-center md:justify-start gap-2">
-              <MapPin className="w-4 h-4 text-blue-400" />
-              <span className="font-medium">Адреса</span>
+          {contacts.address && contacts.address.trim() && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-center md:justify-start gap-2">
+                <MapPin className="w-4 h-4 text-blue-400" />
+                <span className="font-medium">Адреса</span>
+              </div>
+              <span className="text-gray-300 block">
+                {contacts.address}
+              </span>
             </div>
-            <span className="text-gray-300 block">
-              {contacts.address}
-            </span>
-          </div>
+          )}
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-6 text-center">
