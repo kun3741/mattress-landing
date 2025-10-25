@@ -25,6 +25,10 @@ async function initializeDatabase() {
       question_type: q.type === 'radio' ? 'single' : q.type === 'select' ? 'single' : q.type,
       options: q.options || [],
       required: q.required !== false,
+      show_if_logic: q.showIfQuestionId && q.showIfValue ? {
+        question_id: q.showIfQuestionId,
+        answer_value: q.showIfValue
+      } : undefined,
       next_question_logic: {},
       order_index: index + 1
     }))
