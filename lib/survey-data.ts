@@ -110,11 +110,17 @@ export const surveyQuestions: SurveyQuestion[] = [
     ],
     required: true,
   },
+  { 
+    id: "dissatisfaction_custom", 
+    question: "Напишіть що конкретно Вас не влаштовує в матраці чи дивані на якому спите зараз", 
+    type: "text", 
+    required: true 
+  },
   {
     id: "firmness",
     question: "Вам зручніше спати на м'якому чи твердому?",
     type: "radio",
-    options: ["м’який", "твердий", "мабуть середній"],
+    options: ["м'який", "твердий", "мабуть середній"],
     required: true,
   },
   {
@@ -171,6 +177,12 @@ export const surveyQuestions: SurveyQuestion[] = [
     type: "radio",
     options: ["просів", "твердий", "м'який", "дитині не зручний", "свій варіант", "далі"],
     required: true,
+  },
+  { 
+    id: "child_dissatisfaction_custom", 
+    question: "Напишіть що конкретно не влаштовує в матраці чи дивані на якому спить дитина зараз", 
+    type: "text", 
+    required: true 
   },
   {
     id: "child_base",
