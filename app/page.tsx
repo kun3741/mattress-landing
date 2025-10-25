@@ -186,9 +186,13 @@ function HomePage() {
               </div>
               
               <ScrollAnimation animation="fadeUp" delay={200}>
-                <p className="text-base md:text-lg lg:text-xl text-muted-foreground text-pretty max-w-2xl mx-auto lg:mx-0 px-2">
-                  {hero?.subtitle || "Професійний алгоритмічний підбір матрацу з урахуванням ваших індивідуальних особливостей. Програма \"Тарас\" рекомендує лише ті матраци які підійдуть Вам. Не рекламуючи жодного конкретного виробника."}
-                </p>
+                <div className="text-base md:text-lg lg:text-xl text-muted-foreground text-pretty max-w-2xl mx-auto lg:mx-0 px-2 space-y-3">
+                  {(hero?.subtitle || "Професійний алгоритмічний підбір матрацу з урахуванням ваших індивідуальних особливостей. Програма \"Тарас\" рекомендує лише ті матраци які підійдуть Вам. Не рекламуючи жодного конкретного виробника.").split('\n\n').map((paragraph: string, index: number) => (
+                    <p key={index}>
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </ScrollAnimation>
 
             </div>
@@ -249,9 +253,13 @@ function HomePage() {
               </h3>
             </ScrollAnimation>
             <ScrollAnimation animation="fadeUp" delay={300}>
-              <p className="text-base md:text-lg text-muted-foreground text-pretty max-w-2xl mx-auto px-2">
-                {cta?.subtitle || "Серед тисячі ймовірних варіантів матраців програма \"Тарас\" зменшить кількість до 5-ти. А наш менеджер допоможе зробити остаточний вибір. Довірте свій сон професіоналам і супер програмі \"Тарас\""}
-              </p>
+              <div className="text-base md:text-lg text-muted-foreground text-pretty max-w-2xl mx-auto px-2 space-y-3">
+                {(cta?.subtitle || "Серед тисячі ймовірних варіантів матраців програма \"Тарас\" зменшить кількість до 5-ти. А наш менеджер допоможе зробити остаточний вибір. Довірте свій сон професіоналам і супер програмі \"Тарас\"").split('\n\n').map((paragraph: string, index: number) => (
+                  <p key={index}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </ScrollAnimation>
             <ScrollAnimation animation="scale" delay={400}>
               <ButtonHover>
@@ -301,9 +309,13 @@ function HomePage() {
                     <IconComponent className="w-5 h-5 text-primary" />
                     {item.title}
                   </h4>
-                  <p className="text-muted-foreground">
-                    {item.description}
-                  </p>
+                  <div className="text-muted-foreground space-y-2">
+                    {(item.description || "").split('\n\n').map((paragraph: string, pIndex: number) => (
+                      <p key={pIndex}>
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               )
             })}
@@ -317,9 +329,13 @@ function HomePage() {
         title={infoDialogs?.partners?.title || "Наші партнери"}
         content={
           <div className="px-6 md:px-8">
-            <p className="text-muted-foreground">
-              {infoDialogs?.partners?.description || "Ми співпрацюємо з провідними фабриками та брендами матраців — наші партнери допомагають пропонувати найкращі рішення для будь-якого бюджету."}
-            </p>
+            <div className="text-muted-foreground space-y-3">
+              {(infoDialogs?.partners?.description || "Ми співпрацюємо з провідними фабриками та брендами матраців — наші партнери допомагають пропонувати найкращі рішення для будь-якого бюджету.").split('\n\n').map((paragraph: string, index: number) => (
+                <p key={index}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
             <div className="mt-4">
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
                 {(factories || [])

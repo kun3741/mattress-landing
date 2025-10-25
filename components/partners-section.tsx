@@ -178,9 +178,13 @@ export function PartnersSection() {
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
               {content?.partners?.title || "Співпраця з фабриками України та Європи"}
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-              {content?.partners?.subtitle || "Перевірені фабрики-партнери, з якими ми працюємо"}
-            </p>
+            <div className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto space-y-3">
+              {(content?.partners?.subtitle || "Перевірені фабрики-партнери, з якими ми працюємо").split('\n\n').map((paragraph: string, index: number) => (
+                <p key={index}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
         </ScrollAnimation>
         <div className="px-2 sm:px-4 md:px-6">
