@@ -6,6 +6,8 @@ export interface SurveyQuestion {
   options?: string[]
   nextQuestion?: string | ((answer: string) => string)
   required?: boolean
+  showIfQuestionId?: string
+  showIfValue?: string
 }
 
 export const surveyQuestions: SurveyQuestion[] = [
@@ -61,15 +63,17 @@ export const surveyQuestions: SurveyQuestion[] = [
     type: "radio",
     options: ["1", "2"],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дорослий",
   },
-  { id: "adult_1_weight", question: "Ваша вага (кг)", type: "number", required: true },
-  { id: "adult_1_height", question: "Ваш зріст (см)", type: "number", required: true },
-  { id: "adult_1_age", question: "Ваш вік", type: "number", required: true },
-  { id: "adult_2_weight", question: "Вага партнера (кг)", type: "number", required: true },
-  { id: "adult_2_height", question: "Зріст партнера (см)", type: "number", required: true },
-  { id: "adult_2_age", question: "Вік партнера", type: "number", required: true },
+  { id: "adult_1_weight", question: "Ваша вага (кг)", type: "number", required: true, showIfQuestionId: "audience", showIfValue: "Дорослий" },
+  { id: "adult_1_height", question: "Ваш зріст (см)", type: "number", required: true, showIfQuestionId: "audience", showIfValue: "Дорослий" },
+  { id: "adult_1_age", question: "Ваш вік", type: "number", required: true, showIfQuestionId: "audience", showIfValue: "Дорослий" },
+  { id: "adult_2_weight", question: "Вага партнера (кг)", type: "number", required: true, showIfQuestionId: "adults_count", showIfValue: "2" },
+  { id: "adult_2_height", question: "Зріст партнера (см)", type: "number", required: true, showIfQuestionId: "adults_count", showIfValue: "2" },
+  { id: "adult_2_age", question: "Вік партнера", type: "number", required: true, showIfQuestionId: "adults_count", showIfValue: "2" },
 
-  { id: "pain", question: "Чи є у Вас біль під час сну", type: "radio", options: ["так", "ні"], required: true },
+  { id: "pain", question: "Чи є у Вас біль під час сну", type: "radio", options: ["так", "ні"], required: true, showIfQuestionId: "audience", showIfValue: "Дорослий" },
   {
     id: "pain_area",
     question: "Де саме болить?",
@@ -83,9 +87,11 @@ export const surveyQuestions: SurveyQuestion[] = [
       "свій варіант",
     ],
     required: true,
+    showIfQuestionId: "pain",
+    showIfValue: "так",
   },
-  { id: "pain_custom", question: "Опишіть конкретно свій біль або дискомфорт", type: "text", required: true },
-  { id: "health_issues", question: "Чи є у Вас проблеми зі здоров'ям, якщо так, то опишіть конкретно які", type: "text", required: false },
+  { id: "pain_custom", question: "Опишіть конкретно свій біль або дискомфорт", type: "text", required: true, showIfQuestionId: "pain_area", showIfValue: "свій варіант" },
+  { id: "health_issues", question: "Чи є у Вас проблеми зі здоров'ям, якщо так, то опишіть конкретно які", type: "text", required: false, showIfQuestionId: "audience", showIfValue: "Дорослий" },
 
   {
     id: "current_mattress",
@@ -93,8 +99,10 @@ export const surveyQuestions: SurveyQuestion[] = [
     type: "radio",
     options: ["пружинний", "безпружинний", "інше (впишіть)"],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дорослий",
   },
-  { id: "current_mattress_name", question: "Якщо знаєте назву – впишіть", type: "text", required: false },
+  { id: "current_mattress_name", question: "Якщо знаєте назву – впишіть", type: "text", required: false, showIfQuestionId: "current_mattress", showIfValue: "інше (впишіть)" },
 
   {
     id: "dissatisfaction",
@@ -109,12 +117,16 @@ export const surveyQuestions: SurveyQuestion[] = [
       "свій варіант",
     ],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дорослий",
   },
   { 
     id: "dissatisfaction_custom", 
     question: "Напишіть що конкретно Вас не влаштовує в матраці чи дивані на якому спите зараз", 
     type: "text", 
-    required: true 
+    required: true,
+    showIfQuestionId: "dissatisfaction",
+    showIfValue: "свій варіант",
   },
   {
     id: "firmness",
@@ -122,6 +134,8 @@ export const surveyQuestions: SurveyQuestion[] = [
     type: "radio",
     options: ["м'який", "твердий", "мабуть середній"],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дорослий",
   },
   {
     id: "pillow",
@@ -129,6 +143,8 @@ export const surveyQuestions: SurveyQuestion[] = [
     type: "radio",
     options: ["меморі", "пух", "висока", "маленька", "сплю без подушки"],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дорослий",
   },
   {
     id: "base",
@@ -141,6 +157,8 @@ export const surveyQuestions: SurveyQuestion[] = [
       "на підлозі",
     ],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дорослий",
   },
   {
     id: "spring_pref",
@@ -148,41 +166,51 @@ export const surveyQuestions: SurveyQuestion[] = [
     type: "radio",
     options: ["тільки пружинні", "тільки безпружинні", "головне щоб комфортно було"],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дорослий",
   },
-  { id: "adult_extra", question: "Особливості Вашого тіла, або Ваші запитання", type: "text", required: false },
+  { id: "adult_extra", question: "Особливості Вашого тіла, або Ваші запитання", type: "text", required: false, showIfQuestionId: "audience", showIfValue: "Дорослий" },
 
   // Дитина
-  { id: "child_age", question: "Скільки років дитині", type: "number", required: true },
-  { id: "child_weight", question: "Яка вага дитини (кг)", type: "number", required: true },
-  { id: "child_height", question: "Який зріст дитини (см)", type: "number", required: true },
+  { id: "child_age", question: "Скільки років дитині", type: "number", required: true, showIfQuestionId: "audience", showIfValue: "Дитина" },
+  { id: "child_weight", question: "Яка вага дитини (кг)", type: "number", required: true, showIfQuestionId: "audience", showIfValue: "Дитина" },
+  { id: "child_height", question: "Який зріст дитини (см)", type: "number", required: true, showIfQuestionId: "audience", showIfValue: "Дитина" },
   {
     id: "child_health",
     question: "Чи є у дитини проблеми зі здоров'ям?",
     type: "radio",
     options: ["ні", "сколіоз", "лордоз", "кіфоз", "викривлення спини", "інше (пропишіть)"],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дитина",
   },
-  { id: "child_health_other", question: "Вкажіть точний діагноз", type: "text", required: false },
+  { id: "child_health_other", question: "Вкажіть точний діагноз", type: "text", required: false, showIfQuestionId: "child_health", showIfValue: "інше (пропишіть)" },
   {
     id: "child_current_mattress",
     question: "На чому спить дитина зараз?",
     type: "radio",
     options: ["пружинний", "безпружинний", "диван", "люлька", "інше (впишіть)"],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дитина",
   },
-  { id: "child_current_name", question: "Назва/модель (за бажанням)", type: "text", required: false },
+  { id: "child_current_name", question: "Назва/модель (за бажанням)", type: "text", required: false, showIfQuestionId: "audience", showIfValue: "Дитина" },
   {
     id: "child_dissatisfaction",
     question: "Що конкретно не влаштовує зараз під час сну",
     type: "radio",
     options: ["просів", "твердий", "м'який", "дитині не зручний", "свій варіант", "далі"],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дитина",
   },
   { 
     id: "child_dissatisfaction_custom", 
     question: "Напишіть що конкретно не влаштовує в матраці чи дивані на якому спить дитина зараз", 
     type: "text", 
-    required: true 
+    required: true,
+    showIfQuestionId: "child_dissatisfaction",
+    showIfValue: "свій варіант",
   },
   {
     id: "child_base",
@@ -195,8 +223,10 @@ export const surveyQuestions: SurveyQuestion[] = [
       "на підлозі",
     ],
     required: true,
+    showIfQuestionId: "audience",
+    showIfValue: "Дитина",
   },
-  { id: "child_extra", question: "Особливості дитини / запитання (необов'язково)", type: "text", required: false },
+  { id: "child_extra", question: "Особливості дитини / запитання (необов'язково)", type: "text", required: false, showIfQuestionId: "audience", showIfValue: "Дитина" },
 ]
 
 export interface UserData {

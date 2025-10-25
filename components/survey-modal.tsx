@@ -84,80 +84,39 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
       return ["до 5000грн.", "5000-8000грн.", "9000-15000грн.", "можна і більше 15000грн"]
     }
 
-    const q: SurveyQuestion[] = [
-      // Загальні
-      { id: "audience", question: "Для кого обираємо матрац?", type: "radio", options: ["Дитина", "Дорослий"], required: true },
-      { id: "size", question: "Який розмір матрацу Вам потрібен", type: "select", options: ALL_SIZES, required: true },
-      { id: "budget", question: "Впишіть ціну 'ДО' яку Ви готові витратити!", type: "radio", required: true, options: (a) => budgetOptions(a["size"]) },
-
-      // Дорослий гілка
-      { id: "adults_count", question: "Скільки людей буде спати на матраці?", type: "radio", options: ["1", "2"], required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "adult_1_weight", question: "Ваша вага (кг)", type: "number", required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "adult_1_height", question: "Ваш зріст (см)", type: "number", required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "adult_1_age", question: "Ваш вік", type: "number", required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "adult_2_weight", question: "Вага партнера (кг)", type: "number", required: true, showIf: a => a["adults_count"] === "2" },
-      { id: "adult_2_height", question: "Зріст партнера (см)", type: "number", required: true, showIf: a => a["adults_count"] === "2" },
-      { id: "adult_2_age", question: "Вік партнера", type: "number", required: true, showIf: a => a["adults_count"] === "2" },
-
-      { id: "pain", question: "Чи є у Вас біль під час сну", type: "radio", options: ["так", "ні"], required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "pain_area", question: "Де саме болить?", type: "radio", options: ["поперек","шийний відділ","грудний відділ","давить в плече","просто вся спина","свій варіант"], required: true, showIf: a => a["audience"] === "Дорослий" && a["pain"] === "так" },
-      { id: "pain_custom", question: "Опишіть конкретно свій біль або дискомфорт", type: "text", required: true, showIf: a => a["audience"] === "Дорослий" && a["pain_area"] === "свій варіант" },
-      { id: "health_issues", question: "Чи є у Вас проблеми зі здоров'ям, якщо так, то опишіть конкретно які", type: "text", required: false, showIf: a => a["audience"] === "Дорослий" },
-
-      { id: "current_mattress", question: "На якому матраці Ви спите зараз?", type: "radio", options: ["пружинний","безпружинний","інше (впишіть)"] , required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "current_mattress_name", question: "Якщо знаєте назву – впишіть", type: "text", required: false, showIf: a => a["audience"] === "Дорослий" && a["current_mattress"] === "інше (впишіть)" },
-
-      { id: "dissatisfaction", question: "Що саме Вас не влаштовує в матраці на якому спите зараз", type: "radio", options: ["просів","твердий","м'який","просто не зручний","провалююсь","свій варіант"], required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "dissatisfaction_custom", question: "Напишіть що конкретно Вас не влаштовує в матраці чи дивані на якому спите зараз", type: "text", required: true, showIf: a => a["audience"] === "Дорослий" && a["dissatisfaction"] === "свій варіант" },
-      { id: "firmness", question: "Вам зручніше спати на м'якому чи твердому?", type: "radio", options: ["м'який","твердий","мабуть середній"], required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "pillow", question: "На якій подушці любите спати?", type: "radio", options: ["меморі","пух","висока","маленька","сплю без подушки"], required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "base", question: "На чому має лежати матрац", type: "radio", options: ["ламельний каркас","тверда основа ліжка","на іншому матраці","на підлозі"], required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "spring_pref", question: "Віддаєте перевагу пружинним чи безпружинним?", type: "radio", options: ["тільки пружинні","тільки безпружинні","головне щоб комфортно було"], required: true, showIf: a => a["audience"] === "Дорослий" },
-      { id: "adult_extra", question: "Особливості Вашого тіла, або Ваші запитання", type: "text", required: false, showIf: a => a["audience"] === "Дорослий" },
-
-      // Дитина
-      { id: "child_age", question: "Скільки років дитині", type: "number", required: true, showIf: a => a["audience"] === "Дитина" },
-      { id: "child_weight", question: "Яка вага дитини (кг)", type: "number", required: true, showIf: a => a["audience"] === "Дитина" },
-      { id: "child_height", question: "Який зріст дитини (см)", type: "number", required: true, showIf: a => a["audience"] === "Дитина" },
-      { id: "child_health", question: "Чи є у дитини проблеми зі здоров'ям?", type: "radio", options: ["ні","сколіоз","лордоз","кіфоз","викривлення спини","інше (пропишіть)"], required: true, showIf: a => a["audience"] === "Дитина" },
-      { id: "child_health_other", question: "Вкажіть точний діагноз", type: "text", required: false, showIf: a => a["audience"] === "Дитина" && a["child_health"] === "інше (пропишіть)" },
-      { id: "child_current_mattress", question: "На чому спить дитина зараз?", type: "radio", options: ["пружинний","безпружинний","диван","люлька","інше (впишіть)"], required: true, showIf: a => a["audience"] === "Дитина" },
-      { id: "child_current_name", question: "Назва/модель (за бажанням)", type: "text", required: false, showIf: a => a["audience"] === "Дитина" },
-      { id: "child_dissatisfaction", question: "Що конкретно не влаштовує зараз під час сну", type: "radio", options: ["просів","твердий","м'який","дитині не зручний","свій варіант","далі"], required: true, showIf: a => a["audience"] === "Дитина" },
-      { id: "child_dissatisfaction_custom", question: "Напишіть що конкретно не влаштовує в матраці чи дивані на якому спить дитина зараз", type: "text", required: true, showIf: a => a["audience"] === "Дитина" && a["child_dissatisfaction"] === "свій варіант" },
-      { id: "child_base", question: "На чому має лежати матрац", type: "radio", options: ["ламельний каркас","тверда основа ліжка","на іншому матраці","на підлозі"], required: true, showIf: a => a["audience"] === "Дитина" },
-      { id: "child_extra", question: "Особливості дитини / запитання (необов'язково)", type: "text", required: false, showIf: a => a["audience"] === "Дитина" },
-
-      // Фініш для всіх – контактні дані вже зібрані на першому кроці
-      // (видалено дублікати "city" та "phone_confirm")
-    ]
-    
-    // Merge loaded questions with default questions to update texts and logic
-    if (loadedQuestions.length > 0) {
-      return q.map(defaultQ => {
-        const loaded = getLoadedQuestion(defaultQ.id)
-        if (loaded) {
-          // Створюємо нову функцію showIf з даних бази
-          let newShowIf = defaultQ.showIf
-          if (loaded.showIfQuestionId && loaded.showIfValue) {
-            newShowIf = (answers: Record<string, string>) => {
-              return answers[loaded.showIfQuestionId] === loaded.showIfValue
-            }
-          }
-          
-          return {
-            ...defaultQ,
-            question: loaded.question || defaultQ.question,
-            options: loaded.options || defaultQ.options,
-            required: loaded.required !== undefined ? loaded.required : defaultQ.required,
-            showIf: newShowIf
-          }
-        }
-        return defaultQ
-      })
+    // Build questions ONLY from database - completely dynamic!
+    if (loadedQuestions.length === 0) {
+      return []
     }
-    
-    return q
+
+    return loadedQuestions.map((q: any) => {
+      // Handle dynamic options for budget based on size
+      let finalOptions = q.options
+      if (q.id === 'budget' && typeof q.options !== 'function') {
+        // Create dynamic options function for budget
+        finalOptions = (answers: Record<string, string>) => {
+          return budgetOptions(answers['size'])
+        }
+      }
+
+      // Create showIf function from database logic
+      let showIfFunction: ((answers: Record<string, string>) => boolean) | undefined = undefined
+      
+      if (q.showIfQuestionId && q.showIfValue) {
+        showIfFunction = (answers: Record<string, string>) => {
+          return answers[q.showIfQuestionId] === q.showIfValue
+        }
+      }
+
+      return {
+        id: q.id,
+        question: q.question,
+        type: q.type,
+        options: finalOptions,
+        required: q.required !== false,
+        showIf: showIfFunction
+      }
+    })
   }, [loadedQuestions, answers])
 
   const visibleIndexes = useMemo(() => {
