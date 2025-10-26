@@ -42,16 +42,15 @@ export function BrandsBackground() {
 
         .brand-logo {
           position: absolute;
-          opacity: 0.07; /* slightly more visible */
-          filter: grayscale(100%) brightness(0.9);
+          opacity: 0.05;
+          filter: grayscale(100%);
           pointer-events: none;
           transition: filter 0.3s ease;
         }
         
         @media (max-width: 768px) {
           .brand-logo {
-            opacity: 0.12; /* more visible on mobile */
-            filter: grayscale(100%) brightness(1.1);
+            opacity: 0.08;
           }
         }
       `}</style>
