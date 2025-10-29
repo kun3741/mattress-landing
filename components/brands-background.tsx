@@ -50,7 +50,7 @@ export function BrandsBackground() {
         
         @media (max-width: 768px) {
           .brand-logo {
-            opacity: 0.08;
+            opacity: 0.06;
           }
         }
       `}</style>

@@ -99,12 +99,33 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
         }
       }
 
+      // Ensure "Можна більше 25000грн" present for budget2
+      if (q.id === 'budget2' && Array.isArray(finalOptions)) {
+        const has25k = finalOptions.some((o: string) => o.toLowerCase().includes('25000'))
+        if (!has25k) {
+          finalOptions = [...finalOptions, 'Можна більше 25000грн']
+        }
+      }
+
       // Create showIf function from database logic
       let showIfFunction: ((answers: Record<string, string>) => boolean) | undefined = undefined
       
       if (q.showIfQuestionId && q.showIfValue) {
         showIfFunction = (answers: Record<string, string>) => {
-          return answers[q.showIfQuestionId] === q.showIfValue
+          const rawAnswer = answers[q.showIfQuestionId]
+          if (!rawAnswer) return false
+
+          // Support comma-separated list in showIfValue (e.g., multiple sizes)
+          const allowedValues = String(q.showIfValue)
+            .split(',')
+            .map(v => v.trim())
+            .filter(Boolean)
+
+          // Normalize size values by removing spaces for robust comparison
+          const normalize = (v: string) => q.showIfQuestionId === 'size' ? v.replaceAll(' ', '') : v
+
+          const normalizedAnswer = normalize(rawAnswer)
+          return allowedValues.some(v => normalize(v) === normalizedAnswer)
         }
       }
 
