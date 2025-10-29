@@ -1,0 +1,870 @@
+{
+  "timestamp": "2025-10-25T20:49:31.095Z",
+  "version": "1.0",
+  "collections": {
+    "survey_questions": [
+      {
+        "_id": "68fd37cfa10fd0b5be0976d4",
+        "question_id": "audience",
+        "question_text": "Для кого обираємо матрац?",
+        "question_type": "single",
+        "options": [
+          "Дитина",
+          "Дорослий"
+        ],
+        "show_if_logic": null,
+        "next_question_logic": {},
+        "order_index": 1,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.309Z",
+        "updated_at": "2025-10-25T20:49:19.309Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976d5",
+        "question_id": "size",
+        "question_text": "Який розмір матрацу Вам потрібен",
+        "question_type": "single",
+        "options": [
+          "80*190",
+          "80*200",
+          "90*200",
+          "90*190",
+          "120*190",
+          "120*200",
+          "140*190",
+          "140*200",
+          "150*190",
+          "150*200",
+          "160*190",
+          "160*200",
+          "180*190",
+          "180*200",
+          "200*200",
+          "свій варіант"
+        ],
+        "show_if_logic": null,
+        "next_question_logic": {},
+        "order_index": 2,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.309Z",
+        "updated_at": "2025-10-25T20:49:19.309Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976d6",
+        "question_id": "budget",
+        "question_text": "Впишіть ціну 'ДО' яку Ви готові витратити!",
+        "question_type": "single",
+        "options": [
+          "до 5000грн.",
+          "5000-8000грн.",
+          "9000-15000грн.",
+          "можна і більше 15000грн"
+        ],
+        "show_if_logic": null,
+        "next_question_logic": {},
+        "order_index": 3,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.309Z",
+        "updated_at": "2025-10-25T20:49:19.309Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976d7",
+        "question_id": "adults_count",
+        "question_text": "Скільки людей буде спати на матраці?",
+        "question_type": "single",
+        "options": [
+          "1",
+          "2"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 4,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976d8",
+        "question_id": "adult_1_weight",
+        "question_text": "Ваша вага (кг)",
+        "question_type": "number",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 5,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976d9",
+        "question_id": "adult_1_height",
+        "question_text": "Ваш зріст (см)",
+        "question_type": "number",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 6,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976da",
+        "question_id": "adult_1_age",
+        "question_text": "Ваш вік",
+        "question_type": "number",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 7,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976db",
+        "question_id": "adult_2_weight",
+        "question_text": "Вага партнера (кг)",
+        "question_type": "number",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "adults_count",
+          "answer_value": "2"
+        },
+        "next_question_logic": {},
+        "order_index": 8,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976dc",
+        "question_id": "adult_2_height",
+        "question_text": "Зріст партнера (см)",
+        "question_type": "number",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "adults_count",
+          "answer_value": "2"
+        },
+        "next_question_logic": {},
+        "order_index": 9,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976dd",
+        "question_id": "adult_2_age",
+        "question_text": "Вік партнера",
+        "question_type": "number",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "adults_count",
+          "answer_value": "2"
+        },
+        "next_question_logic": {},
+        "order_index": 10,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976de",
+        "question_id": "pain",
+        "question_text": "Чи є у Вас біль під час сну",
+        "question_type": "single",
+        "options": [
+          "так",
+          "ні"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 11,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976df",
+        "question_id": "pain_area",
+        "question_text": "Де саме болить?",
+        "question_type": "single",
+        "options": [
+          "поперек",
+          "шийний відділ",
+          "грудний відділ",
+          "давить в плече",
+          "просто вся спина",
+          "свій варіант"
+        ],
+        "show_if_logic": {
+          "question_id": "pain",
+          "answer_value": "так"
+        },
+        "next_question_logic": {},
+        "order_index": 12,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976e0",
+        "question_id": "pain_custom",
+        "question_text": "Опишіть конкретно свій біль або дискомфорт",
+        "question_type": "text",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "pain_area",
+          "answer_value": "свій варіант"
+        },
+        "next_question_logic": {},
+        "order_index": 13,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976e1",
+        "question_id": "health_issues",
+        "question_text": "Чи є у Вас проблеми зі здоров'ям, якщо так, то опишіть конкретно які",
+        "question_type": "text",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 14,
+        "required": false,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976e2",
+        "question_id": "current_mattress",
+        "question_text": "На якому матраці Ви спите зараз?",
+        "question_type": "single",
+        "options": [
+          "пружинний",
+          "безпружинний",
+          "інше (впишіть)"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 15,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976e3",
+        "question_id": "current_mattress_name",
+        "question_text": "Якщо знаєте назву – впишіть",
+        "question_type": "text",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "current_mattress",
+          "answer_value": "інше (впишіть)"
+        },
+        "next_question_logic": {},
+        "order_index": 16,
+        "required": false,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976e4",
+        "question_id": "dissatisfaction",
+        "question_text": "Що саме Вас не влаштовує в матраці на якому спите зараз",
+        "question_type": "single",
+        "options": [
+          "просів",
+          "твердий",
+          "м'який",
+          "просто не зручний",
+          "провалююсь",
+          "свій варіант"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 17,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976e5",
+        "question_id": "dissatisfaction_custom",
+        "question_text": "Напишіть що конкретно Вас не влаштовує в матраці чи дивані на якому спите зараз",
+        "question_type": "text",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "dissatisfaction",
+          "answer_value": "свій варіант"
+        },
+        "next_question_logic": {},
+        "order_index": 18,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976e6",
+        "question_id": "firmness",
+        "question_text": "Вам зручніше спати на м'якому чи твердому?",
+        "question_type": "single",
+        "options": [
+          "м'який",
+          "твердий",
+          "мабуть середній"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 19,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976e7",
+        "question_id": "pillow",
+        "question_text": "На якій подушці любите спати?",
+        "question_type": "single",
+        "options": [
+          "меморі",
+          "пух",
+          "висока",
+          "маленька",
+          "сплю без подушки"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 20,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976e8",
+        "question_id": "base",
+        "question_text": "На чому має лежати матрац",
+        "question_type": "single",
+        "options": [
+          "ламельний каркас",
+          "тверда основа ліжка",
+          "на іншому матраці",
+          "на підлозі"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 21,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976e9",
+        "question_id": "spring_pref",
+        "question_text": "Віддаєте перевагу пружинним чи безпружинним?",
+        "question_type": "single",
+        "options": [
+          "тільки пружинні",
+          "тільки безпружинні",
+          "головне щоб комфортно було"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 22,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976ea",
+        "question_id": "adult_extra",
+        "question_text": "Особливості Вашого тіла, або Ваші запитання",
+        "question_type": "text",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дорослий"
+        },
+        "next_question_logic": {},
+        "order_index": 23,
+        "required": false,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976eb",
+        "question_id": "child_age",
+        "question_text": "Скільки років дитині",
+        "question_type": "number",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дитина"
+        },
+        "next_question_logic": {},
+        "order_index": 24,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976ec",
+        "question_id": "child_weight",
+        "question_text": "Яка вага дитини (кг)",
+        "question_type": "number",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дитина"
+        },
+        "next_question_logic": {},
+        "order_index": 25,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976ed",
+        "question_id": "child_height",
+        "question_text": "Який зріст дитини (см)",
+        "question_type": "number",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дитина"
+        },
+        "next_question_logic": {},
+        "order_index": 26,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976ee",
+        "question_id": "child_health",
+        "question_text": "Чи є у дитини проблеми зі здоров'ям?",
+        "question_type": "single",
+        "options": [
+          "ні",
+          "сколіоз",
+          "лордоз",
+          "кіфоз",
+          "викривлення спини",
+          "інше (пропишіть)"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дитина"
+        },
+        "next_question_logic": {},
+        "order_index": 27,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976ef",
+        "question_id": "child_health_other",
+        "question_text": "Вкажіть точний діагноз",
+        "question_type": "text",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "child_health",
+          "answer_value": "інше (пропишіть)"
+        },
+        "next_question_logic": {},
+        "order_index": 28,
+        "required": false,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976f0",
+        "question_id": "child_current_mattress",
+        "question_text": "На чому спить дитина зараз?",
+        "question_type": "single",
+        "options": [
+          "пружинний",
+          "безпружинний",
+          "диван",
+          "люлька",
+          "інше (впишіть)"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дитина"
+        },
+        "next_question_logic": {},
+        "order_index": 29,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976f1",
+        "question_id": "child_current_name",
+        "question_text": "Назва/модель (за бажанням)",
+        "question_type": "text",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дитина"
+        },
+        "next_question_logic": {},
+        "order_index": 30,
+        "required": false,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976f2",
+        "question_id": "child_dissatisfaction",
+        "question_text": "Що конкретно не влаштовує зараз під час сну",
+        "question_type": "single",
+        "options": [
+          "просів",
+          "твердий",
+          "м'який",
+          "дитині не зручний",
+          "свій варіант",
+          "далі"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дитина"
+        },
+        "next_question_logic": {},
+        "order_index": 31,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976f3",
+        "question_id": "child_dissatisfaction_custom",
+        "question_text": "Напишіть що конкретно не влаштовує в матраці чи дивані на якому спить дитина зараз",
+        "question_type": "text",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "child_dissatisfaction",
+          "answer_value": "свій варіант"
+        },
+        "next_question_logic": {},
+        "order_index": 32,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976f4",
+        "question_id": "child_base",
+        "question_text": "На чому має лежати матрац",
+        "question_type": "single",
+        "options": [
+          "ламельний каркас",
+          "тверда основа ліжка",
+          "на іншому матраці",
+          "на підлозі"
+        ],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дитина"
+        },
+        "next_question_logic": {},
+        "order_index": 33,
+        "required": true,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      },
+      {
+        "_id": "68fd37cfa10fd0b5be0976f5",
+        "question_id": "child_extra",
+        "question_text": "Особливості дитини / запитання (необов'язково)",
+        "question_type": "text",
+        "options": [],
+        "show_if_logic": {
+          "question_id": "audience",
+          "answer_value": "Дитина"
+        },
+        "next_question_logic": {},
+        "order_index": 34,
+        "required": false,
+        "created_at": "2025-10-25T20:49:19.310Z",
+        "updated_at": "2025-10-25T20:49:19.310Z"
+      }
+    ],
+    "site_content": [
+      {
+        "_id": "68fd25dafeaa782b366aad3e",
+        "key": "hero",
+        "value": {
+          "title": "Програма для ідеального підбору матрацу за 5 хв.",
+          "subtitle": "Програма \"Тарас\" рекомендує лише ті матраци які підійдуть Вам. Не рекламуючи жодного конкретного виробника.\n\nПісля проходження тесту, ми надішлемо вам посилання на сайт і конкретні матраци. Дана програма створена лише для правильного підбору моделі.",
+          "ctaButton": "Підібрати матрац за допомогою програми"
+        },
+        "updated_at": "2025-10-25T17:57:18.875Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad3f",
+        "key": "video",
+        "value": {
+          "title": "Як працює наша програма підбору?",
+          "url": "",
+          "description": "Вітаю мене звати Тарас! 🎬\n\nЯ унікальна програма, яка створена для правильного підбору матраців.\n\nЯк це працює?\n\nВсе дуже просто! Натисніть кнопку підібрати матрац та дайте відповіді на запитання і по Вашим параметрам і бюджету я оберу для Вас ідеальний матрац від кращих виробників України, Туреччини, Італії, Німеччини, Іспанії, Румунії.\n\nЯ створений, щоб зберегти Ваш час і допомогти виспатися на всі 100%\n\nМене створювали люди з величезним досвідом та знаннями. Враховується кожна деталь.\n\nЦе унікальна технологія яка допомагає швидко і головне ідеально правильно обрати модель матрацу яка підійде саме Вам, або Вашій дитині чи батькам.\n\nНезалежно від фірми чи країни виробника.\n\nПросто, швидко і головне ефективно!\n\nТож тисни підібрати матрац , бо я вже готовий працювати.",
+          "ctaTitle": "Готові розпочати підбір матрацу?",
+          "ctaButton": "Підібрати матрац за допомогою програми 🛏️",
+          "ctaSubtitle": "Швидко, правильно та ортопедично."
+        },
+        "updated_at": "2025-10-25T17:57:19.033Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad40",
+        "key": "benefits",
+        "value": [
+          {
+            "title": "Економія часу",
+            "description": "Замість того, щоб витрачати дні на відвідування магазинів і вивчення характеристик, ви отримаєте персональні рекомендації за 5 хвилин."
+          },
+          {
+            "title": "Професійний алгоритм",
+            "description": "Наш алгоритм враховує вашу вагу, зріст, позу сну, проблеми зі здоров'ям та інші важливі фактори для ідеального підбору."
+          },
+          {
+            "title": "Широкий вибір",
+            "description": "Програма не рекомендує конкретного виробника. Тип матрацу і фірма обираються виключно по Ваших характеристиках"
+          },
+          {
+            "title": "Експертна підтримка",
+            "description": "Після тесту з вами зв'яжеться наш експерт, який відповість на всі питання та допоможе зробити остаточний вибір."
+          }
+        ],
+        "updated_at": "2025-10-25T17:57:19.192Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad41",
+        "key": "benefitsSection",
+        "value": {
+          "title": "Чому варто довірити підбір програмі \"Тарас\""
+        },
+        "updated_at": "2025-10-25T17:57:19.350Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad42",
+        "key": "partners",
+        "value": {
+          "title": "Співпраця з фабриками України та Європи",
+          "subtitle": "Перевірені фабрики-партнери, з якими ми працюємо"
+        },
+        "updated_at": "2025-10-25T17:57:19.510Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad43",
+        "key": "cta",
+        "value": {
+          "title": "Готові розпочати підбір матрацу?",
+          "subtitle": "Серед тисячі ймовірних варіантів матраців програма \"Тарас\" зменшить кількість до 5-ти. А наш менеджер допоможе зробити остаточний вибір. Довірте свій сон професіоналам і супер програмі \"Тарас\"",
+          "button": "Підібрати матрац за допомогою програми"
+        },
+        "updated_at": "2025-10-25T17:57:19.668Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad44",
+        "key": "contacts",
+        "value": {
+          "phone": "+38(093) 990-83-88",
+          "email": "info@mattress-selection.ua",
+          "address": ""
+        },
+        "updated_at": "2025-10-25T17:57:19.826Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad45",
+        "key": "factories",
+        "value": [
+          {
+            "name": "Come-for",
+            "logo": "/come-for.png"
+          },
+          {
+            "name": "EMM",
+            "logo": "/emm.150x100.jpg"
+          },
+          {
+            "name": "Evolution",
+            "logo": "/evolution_2024.150x100.jpg"
+          },
+          {
+            "name": "BRN",
+            "logo": "/fabrika_brn-o7uhcpocfs6s1sa5b6n2l3usbvnih4qa43kodvvg9s.png"
+          },
+          {
+            "name": "Fashion",
+            "logo": "/fashion_logo.150x100.jpg"
+          },
+          {
+            "name": "FDM",
+            "logo": "/FDM big.png"
+          },
+          {
+            "name": "BlueMarine",
+            "logo": "/k1-200x120.png"
+          },
+          {
+            "name": "Noble",
+            "logo": "/k6-200x120.png"
+          },
+          {
+            "name": "Zephyr",
+            "logo": "/k8-200x120.png"
+          },
+          {
+            "name": "Karib",
+            "logo": "/karib.png"
+          },
+          {
+            "name": "Keiko",
+            "logo": "/keiko-col-main-200x120.png"
+          },
+          {
+            "name": "Arabeska",
+            "logo": "/logo_arabeska_150x100.150x100.png"
+          },
+          {
+            "name": "Belsonno",
+            "logo": "/logo_belsonno_150x100.150x100.png"
+          },
+          {
+            "name": "Palmera",
+            "logo": "/logo_palmera.150x100.jpg"
+          },
+          {
+            "name": "Matro Lux",
+            "logo": "/Logo_ukr.jpg"
+          },
+          {
+            "name": "Adormo",
+            "logo": "/logo-2-400x164.png"
+          },
+          {
+            "name": "Belsonno Pure",
+            "logo": "/logo-belsonno-pure-01-1-150x37.png"
+          },
+          {
+            "name": "Artist",
+            "logo": "/logo-kolektsii-dlya-sajtu.150x100.jpg"
+          },
+          {
+            "name": "Magniflex",
+            "logo": "/logo-magniflex.png"
+          }
+        ],
+        "updated_at": "2025-10-25T17:57:19.984Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad46",
+        "key": "navigation",
+        "value": {
+          "benefits": "Переваги",
+          "partners": "Фабрики матраців",
+          "contacts": "Контакти"
+        },
+        "updated_at": "2025-10-25T17:57:20.143Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad47",
+        "key": "footer",
+        "value": {
+          "copyright": "© 2025 Підбір Матрацу. Всі права захищені. 💤",
+          "benefits": "Переваги",
+          "partners": "Фабрики матраців",
+          "contacts": "Контакти"
+        },
+        "updated_at": "2025-10-25T17:57:20.302Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad48",
+        "key": "infoDialogs",
+        "value": {
+          "benefits": {
+            "title": "Переваги нашої програми",
+            "content": [
+              {
+                "title": "Економія часу",
+                "description": "Замість того, щоб витрачати дні на відвідування магазинів і вивчення характеристик, ви отримаєте персональні рекомендації за 5 хвилин."
+              },
+              {
+                "title": "Професійний алгоритм",
+                "description": "Наш алгоритм враховує вашу вагу, зріст, позу сну, проблеми зі здоров'ям та інші важливі фактори для ідеального підбору."
+              },
+              {
+                "title": "Широкий вибір",
+                "description": "Програма не рекомендує конкретного виробника. Тип матрацу і фірма обираються виключно по Ваших характеристиках"
+              },
+              {
+                "title": "Експертна підтримка",
+                "description": "Після тесту з вами зв'яжеться наш експерт, який відповість на всі питання та допоможе зробити остаточний вибір."
+              }
+            ]
+          },
+          "partners": {
+            "title": "Наші партнери",
+            "description": "Ми співпрацюємо з провідними фабриками та брендами матраців з України та Європи."
+          },
+          "contacts": {
+            "title": "Контактна інформація"
+          }
+        },
+        "updated_at": "2025-10-25T17:57:20.460Z"
+      },
+      {
+        "_id": "68fd25dafeaa782b366aad49",
+        "key": "seo",
+        "value": {
+          "title": "Підбір Матрацу | Програма Тарас",
+          "description": "Ідеальний підбір матрацу за 5хв. Програма \"Тарас\" рекомендує лише ті матраци які підійдуть Вам. Не рекламуючи жодного конкретного виробника.",
+          "keywords": "підбір матрацу, купити матрац, матраці україна, ортопедичний матрац, консультація матрац, програма тарас"
+        },
+        "updated_at": "2025-10-25T17:57:20.618Z"
+      }
+    ]
+  }
+}

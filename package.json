@@ -15,6 +15,8 @@
     "telegram:test": "tsx scripts/test-telegram.ts",
     "content:update": "tsx scripts/update-content.ts",
     "db:seed:questions": "tsx scripts/seed-survey-questions.ts",
+    "db:backup": "tsx scripts/backup-database.ts",
+    "db:restore": "tsx scripts/restore-database.ts",
     "prepare:github": "tsx scripts/prepare-clean-repo.ts"
   },
   "dependencies": {

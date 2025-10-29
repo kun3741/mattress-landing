@@ -23,6 +23,12 @@ export interface SurveyResponse {
   phone: string
   city: string
   answers: Record<string, any>
+  resolved_answers?: Array<{ id: string; question: string; answer: string }>
+  meta?: {
+    user_agent?: string
+    referer?: string
+    submitted_at?: string
+  }
   created_at?: Date
 }
 

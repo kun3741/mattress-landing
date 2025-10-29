@@ -6,18 +6,37 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json()
 
-    try {
-      await SurveyResponsesService.create({
-        name: data.userData.name,
-        phone: data.userData.phone,
-        city: data.userData.city,
-        answers: data.answers,
-      })
-    } catch (dbError) {
-      console.error("[v0] Database error:", dbError)
+    // Basic validation
+    const name = String(data?.userData?.name || '').trim()
+    const phone = String(data?.userData?.phone || '').trim()
+    const city = String(data?.userData?.city || '').trim()
+    const answers = data?.answers && typeof data.answers === 'object' ? data.answers : {}
+    const resolvedAnswers = Array.isArray(data?.resolvedAnswers) ? data.resolvedAnswers : []
+
+    if (!name || !phone) {
+      return NextResponse.json({ error: "Invalid payload" }, { status: 400 })
     }
 
-    const result = await sendToTelegram(data)
+    // Persist to DB (mandatory)
+    await SurveyResponsesService.create({
+      name,
+      phone,
+      city,
+      answers,
+      resolved_answers: resolvedAnswers,
+      meta: {
+        user_agent: request.headers.get('user-agent') || undefined,
+        referer: request.headers.get('referer') || undefined,
+        submitted_at: new Date().toISOString(),
+      }
+    } as any)
+
+    // Notify Telegram (non-blocking for DB success)
+    const result = await sendToTelegram({
+      userData: { name, phone, city },
+      answers,
+      resolvedAnswers
+    })
 
     if (!result.success) {
       return NextResponse.json({ error: "Failed to send data" }, { status: 500 })

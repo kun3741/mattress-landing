@@ -122,9 +122,11 @@ function AdminPageContent() {
           const questionData: any = { ...q }
           
           // Додаємо опції
-          if (optionsInputs[index]) {
-            questionData.options = optionsInputs[index].split(",").map((s: string) => s.trim()).filter(Boolean)
-          }
+          const rawOpts = optionsInputs[index] ?? (Array.isArray(q.options) ? q.options.join(", ") : '')
+          questionData.options = String(rawOpts)
+            .split(",")
+            .map((s: string) => s.trim())
+            .filter(Boolean)
           
           // Додаємо умовну логіку
           if (q.showIfQuestionId && q.showIfValue) {
@@ -133,6 +135,14 @@ function AdminPageContent() {
               value: q.showIfValue
             }
           }
+
+          // Санітизуємо тип питання
+          const allowed = ['radio','select','text','number']
+          questionData.type = allowed.includes(q.type as any) ? q.type : 'text'
+          
+          // Обов'язкові поля
+          questionData.id = String(q.id || '').trim()
+          questionData.question = String(q.question || '').trim()
           
           return questionData
         })
