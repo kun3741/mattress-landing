@@ -182,7 +182,7 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
     const nameOk = /^[A-Za-zА-Яа-яЁёІіЇїЄє' -]{2,}$/.test(userData.name.trim())
     const digits = userData.phone.replace(/\D/g, "")
     const phoneOk = digits.length >= 10 && digits.length <= 13
-    const cityOk = userData.city.trim().length >= 2
+    const cityOk = /^[A-Za-zА-Яа-яЁёІіЇїЄє' -]{2,}$/.test(userData.city.trim())
 
     if (!nameOk) {
       toast({ title: "Помилка", description: "Ім'я має містити лише літери (мінімум 2 символи).", variant: "destructive" })
@@ -193,7 +193,7 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
       return
     }
     if (!cityOk) {
-      toast({ title: "Помилка", description: "Вкажіть назву населеного пункту (мінімум 2 символи).", variant: "destructive" })
+      toast({ title: "Помилка", description: "Місто/селище має містити лише літери (мінімум 2 символи).", variant: "destructive" })
       return
     }
 
@@ -316,7 +316,19 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
             </div>
             <div>
               <Label htmlFor="city">Місто/Селище</Label>
-              <Input id="city" className="w-full" value={userData.city} onChange={(e) => setUserData({ ...userData, city: e.target.value })} required minLength={2} />
+              <Input
+                id="city"
+                className="w-full"
+                value={userData.city}
+                onChange={(e) => {
+                  const cleaned = e.target.value.replace(/[0-9]/g, "")
+                  setUserData({ ...userData, city: cleaned })
+                }}
+                required
+                minLength={2}
+                pattern="^[A-Za-zА-Яа-яЁёІіЇїЄє' -]{2,}$"
+                title="Вводьте лише літери, пробіли, апостроф та дефіс (мін. 2 символи)"
+              />
             </div>
             <div className="flex justify-between pt-2">
               <Button type="button" variant="outline" onClick={goBackFromContact}>Назад</Button>

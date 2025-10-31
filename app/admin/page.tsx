@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
-import { Loader2, Save, Plus, Trash2, ArrowLeft, RefreshCw, LogOut, ArrowUp, ArrowDown } from "lucide-react"
+import { Loader2, Save, Plus, Trash2, ArrowLeft, RefreshCw, LogOut, ArrowUp, ArrowDown, Upload } from "lucide-react"
 import Link from "next/link"
 import type { SiteContent } from "@/lib/content-data"
 import type { SurveyQuestion } from "@/lib/survey-data"
@@ -780,6 +780,47 @@ function AdminPageContent() {
                         }}
                         placeholder="Шлях до логотипу"
                       />
+                      {/* Upload control */}
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+                            const file = e.target.files?.[0]
+                            if (!file) return
+                            try {
+                              const form = new FormData()
+                              form.append("file", file)
+                              form.append("folder", "factories")
+                              const resp = await fetch("/api/upload", { method: "POST", body: form })
+                              if (!resp.ok) throw new Error("Upload failed")
+                              const data = await resp.json()
+                              const newFactories = [...content.factories]
+                              newFactories[index].logo = data.url
+                              updateContent("factories", newFactories)
+                              setContentDirty(true)
+                              toast({ title: "Завантажено", description: "Зображення збережено" })
+                            } catch (err) {
+                              toast({ title: "Помилка", description: "Не вдалося завантажити зображення", variant: "destructive" })
+                            } finally {
+                              // reset value to allow re-upload same file name if needed
+                              e.target.value = ""
+                            }
+                          }}
+                        />
+                        <Button type="button" variant="outline" size="sm" asChild>
+                          <label className="cursor-pointer flex items-center gap-2">
+                            <Upload className="w-4 h-4" /> Завантажити файл
+                          </label>
+                        </Button>
+                      </div>
+                      <div className="text-xs text-muted-foreground">Після завантаження поле “Шлях до логотипу” заповниться автоматично</div>
+                      <div className="flex items-center gap-3">
+                        {factory.logo && (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={factory.logo} alt="preview" className="h-10 object-contain border rounded-md bg-white p-1" />
+                        )}
+                      </div>
                       <div className="flex items-center gap-2">
                         <input
                           id={`priority_${index}`}
