@@ -13,6 +13,18 @@ import { type UserData } from "@/lib/survey-data"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2, CheckCircle2 } from "lucide-react"
 
+// Support for custom option like "інше (впишіть)" / "свій варіант"
+const OTHER_VALUE = "__other__"
+const isOtherOption = (label: string) => {
+  const s = label.toLowerCase()
+  return (
+    s.includes("інше") ||
+    s.includes("iнше") ||
+    s.includes("свій варіант") ||
+    s.includes("свiй варiант")
+  )
+}
+
 interface SurveyQuestion {
   id: string
   question: string
@@ -20,6 +32,13 @@ interface SurveyQuestion {
   options?: string[] | ((answers: Record<string, string>) => string[])
   required?: boolean
   showIf?: (answers: Record<string, string>) => boolean
+  // include admin-configured otherInput
+  otherInput?: {
+    enabled?: boolean
+    label?: string
+    placeholder?: string
+    required?: boolean
+  }
 }
 
 interface SurveyModalProps {
@@ -32,6 +51,8 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [userData, setUserData] = useState<UserData>({ name: "", phone: "", city: "" })
   const [answers, setAnswers] = useState<Record<string, string>>({})
+  // Stores free-text for questions where user chose OTHER_VALUE
+  const [otherAnswers, setOtherAnswers] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [loadedQuestions, setLoadedQuestions] = useState<any[]>([])
   const [isLoadingQuestions, setIsLoadingQuestions] = useState(true)
@@ -135,8 +156,9 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
         type: q.type,
         options: finalOptions,
         required: q.required !== false,
-        showIf: showIfFunction
-      }
+        showIf: showIfFunction,
+        otherInput: q.otherInput,
+      } as SurveyQuestion
     })
   }, [loadedQuestions, answers])
 
@@ -157,13 +179,35 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (userData.name && userData.phone && userData.city) {
-      handleSubmit()
+    const nameOk = /^[A-Za-zА-Яа-яЁёІіЇїЄє' -]{2,}$/.test(userData.name.trim())
+    const digits = userData.phone.replace(/\D/g, "")
+    const phoneOk = digits.length >= 10 && digits.length <= 13
+    const cityOk = userData.city.trim().length >= 2
+
+    if (!nameOk) {
+      toast({ title: "Помилка", description: "Ім'я має містити лише літери (мінімум 2 символи).", variant: "destructive" })
+      return
     }
+    if (!phoneOk) {
+      toast({ title: "Помилка", description: "Вкажіть коректний номер телефону (від 10 цифр).", variant: "destructive" })
+      return
+    }
+    if (!cityOk) {
+      toast({ title: "Помилка", description: "Вкажіть назву населеного пункту (мінімум 2 символи).", variant: "destructive" })
+      return
+    }
+
+    handleSubmit()
   }
 
   const handleAnswerChange = (value: string) => {
     setAnswers({ ...answers, [currentQuestion.id]: value })
+    // Clear custom text if user switched away from OTHER_VALUE
+    setOtherAnswers(prev => {
+      const copy = { ...prev }
+      if (value !== OTHER_VALUE) delete (copy as any)[currentQuestion.id]
+      return copy
+    })
   }
 
   const goToNextVisible = () => {
@@ -194,7 +238,11 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
     try {
       const resolvedAnswers = questions
         .filter((q) => !q.showIf || q.showIf(answers))
-        .map((q) => ({ id: q.id, question: q.question, answer: answers[q.id] }))
+        .map((q) => {
+          const raw = answers[q.id]
+          const finalAns = raw === OTHER_VALUE ? (otherAnswers[q.id] || "") : raw
+          return { id: q.id, question: q.question, answer: finalAns }
+        })
 
       const payload = {
         userData: {
@@ -233,8 +281,12 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
     if (!currentQuestion) return false
     if (!currentQuestion.required) return true
     const val = answers[currentQuestion.id]
+    if (val === OTHER_VALUE) {
+      const req = (currentQuestion as any).otherInput?.required !== false
+      return !req || (typeof otherAnswers[currentQuestion.id] === 'string' && otherAnswers[currentQuestion.id].trim().length > 0)
+    }
     return typeof val === 'string' && val.trim().length > 0
-  }, [currentQuestion, answers])
+  }, [currentQuestion, answers, otherAnswers])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -256,15 +308,15 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
           <form onSubmit={handleContactSubmit} className="space-y-4 text-left">
             <div>
               <Label htmlFor="name">Ім'я</Label>
-              <Input id="name" className="w-full" value={userData.name} onChange={(e) => setUserData({ ...userData, name: e.target.value })} required />
+              <Input id="name" className="w-full" value={userData.name} onChange={(e) => setUserData({ ...userData, name: e.target.value })} required pattern="^[A-Za-zА-Яа-яЁёІіЇїЄє' -]{2,}$" minLength={2} title="Введіть ім'я без цифр (мін. 2 символи)" />
             </div>
             <div>
               <Label htmlFor="phone">Телефон</Label>
-              <Input id="phone" className="w-full" value={userData.phone} onChange={(e) => setUserData({ ...userData, phone: e.target.value })} required />
+              <Input id="phone" className="w-full" value={userData.phone} onChange={(e) => setUserData({ ...userData, phone: e.target.value })} required inputMode="tel" pattern="^[0-9+()\\s-]{10,}$" minLength={10} title="Введіть коректний номер телефону" />
             </div>
             <div>
               <Label htmlFor="city">Місто/Селище</Label>
-              <Input id="city" className="w-full" value={userData.city} onChange={(e) => setUserData({ ...userData, city: e.target.value })} required />
+              <Input id="city" className="w-full" value={userData.city} onChange={(e) => setUserData({ ...userData, city: e.target.value })} required minLength={2} />
             </div>
             <div className="flex justify-between pt-2">
               <Button type="button" variant="outline" onClick={goBackFromContact}>Назад</Button>
@@ -294,26 +346,60 @@ export function SurveyModal({ open, onOpenChange }: SurveyModalProps) {
                   value={answers[currentQuestion.id] || ""}
                   onValueChange={handleAnswerChange}
                 >
-                  {(typeof currentQuestion.options === "function" ? currentQuestion.options(answers) : currentQuestion.options || []).map((opt) => (
-                    <div key={opt} className="flex items-center space-x-2 py-1">
-                      <RadioGroupItem id={`${currentQuestion.id}-${opt}`} value={opt} />
-                      <Label htmlFor={`${currentQuestion.id}-${opt}`}>{opt}</Label>
-                    </div>
-                  ))}
+                  {(typeof currentQuestion.options === "function" ? currentQuestion.options(answers) : currentQuestion.options || []).map((opt) => {
+                    const otherEnabled = (currentQuestion as any).otherInput?.enabled
+                    const otherLabel = (currentQuestion as any).otherInput?.label || opt
+                    const useOther = otherEnabled ? isOtherOption(otherLabel) || isOtherOption(opt) : isOtherOption(opt)
+                    const value = useOther ? OTHER_VALUE : opt
+                    const labelText = useOther && otherEnabled ? otherLabel : opt
+                    return (
+                      <div key={opt} className="flex items-center space-x-2 py-1">
+                        <RadioGroupItem id={`${currentQuestion.id}-${opt}`} value={value} />
+                        <Label htmlFor={`${currentQuestion.id}-${opt}`}>{labelText}</Label>
+                      </div>
+                    )
+                  })}
                 </RadioGroup>
+              )}
+              {currentQuestion.type === "radio" && answers[currentQuestion.id] === OTHER_VALUE && (
+                <div className="mt-2">
+                  <Input
+                    placeholder={(currentQuestion as any).otherInput?.placeholder || "Впишіть свій варіант"}
+                    value={otherAnswers[currentQuestion.id] || ""}
+                    onChange={(e) => setOtherAnswers({ ...otherAnswers, [currentQuestion.id]: e.target.value })}
+                  />
+                </div>
               )}
 
               {currentQuestion.type === "select" && (
-                <Select value={answers[currentQuestion.id]} onValueChange={handleAnswerChange}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Оберіть варіант" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {(typeof currentQuestion.options === "function" ? currentQuestion.options(answers) : currentQuestion.options || []).map((opt) => (
-                      <SelectItem key={opt} value={opt}>{opt}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <>
+                  <Select value={answers[currentQuestion.id]} onValueChange={handleAnswerChange}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Оберіть варіант" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {(typeof currentQuestion.options === "function" ? currentQuestion.options(answers) : currentQuestion.options || []).map((opt) => {
+                        const otherEnabled = (currentQuestion as any).otherInput?.enabled
+                        const otherLabel = (currentQuestion as any).otherInput?.label || opt
+                        const useOther = otherEnabled ? isOtherOption(otherLabel) || isOtherOption(opt) : isOtherOption(opt)
+                        const value = useOther ? OTHER_VALUE : opt
+                        const labelText = useOther && otherEnabled ? otherLabel : opt
+                        return (
+                          <SelectItem key={opt} value={value}>{labelText}</SelectItem>
+                        )
+                      })}
+                    </SelectContent>
+                  </Select>
+                  {answers[currentQuestion.id] === OTHER_VALUE && (
+                    <div className="mt-2">
+                      <Input
+                        placeholder={(currentQuestion as any).otherInput?.placeholder || "Впишіть свій варіант"}
+                        value={otherAnswers[currentQuestion.id] || ""}
+                        onChange={(e) => setOtherAnswers({ ...otherAnswers, [currentQuestion.id]: e.target.value })}
+                      />
+                    </div>
+                  )}
+                </>
               )}
 
               {(currentQuestion.type === "text" || currentQuestion.type === "number") && (
