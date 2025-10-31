@@ -136,6 +136,19 @@ function AdminPageContent() {
             }
           }
 
+          // Конфіг для "інше/свій варіант"
+          if (q.otherInput && q.otherInput.enabled) {
+            questionData.otherInput = {
+              enabled: true,
+              label: q.otherInput.label || 'інше (впишіть)',
+              placeholder: q.otherInput.placeholder || 'Впишіть свій варіант',
+              required: q.otherInput.required !== false,
+            }
+          } else if (q.otherInput) {
+            // якщо вимкнено — збережемо enabled=false
+            questionData.otherInput = { enabled: false }
+          }
+
           // Санітизуємо тип питання
           const allowed = ['radio','select','text','number']
           questionData.type = allowed.includes(q.type as any) ? q.type : 'text'
@@ -612,6 +625,54 @@ function AdminPageContent() {
                           }}
                           rows={2}
                         />
+                        {/* Налаштування "інше/свій варіант" */}
+                        <div className="mt-2 p-3 border rounded-md space-y-2 bg-muted/30">
+                          <div className="flex items-center gap-2">
+                            <input
+                              id={`other_${index}`}
+                              type="checkbox"
+                              checked={!!question.otherInput?.enabled}
+                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                const newQ = { ...question, otherInput: { ...(question.otherInput || {}), enabled: e.target.checked } }
+                                updateQuestion(index, "otherInput", newQ.otherInput as any)
+                              }}
+                            />
+                            <Label htmlFor={`other_${index}`} className="text-sm">Дозволити свій варіант</Label>
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                            <div className="space-y-1">
+                              <Label className="text-xs">Мітка опції</Label>
+                              <Input
+                                value={question.otherInput?.label || ''}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "otherInput", { ...(question.otherInput || {}), label: e.target.value, enabled: question.otherInput?.enabled ?? true })}
+                                placeholder="інше (впишіть), свій варіант"
+                                className="text-sm"
+                                disabled={!question.otherInput?.enabled}
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <Label className="text-xs">Плейсхолдер поля</Label>
+                              <Input
+                                value={question.otherInput?.placeholder || ''}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "otherInput", { ...(question.otherInput || {}), placeholder: e.target.value, enabled: question.otherInput?.enabled ?? true })}
+                                placeholder="Впишіть свій варіант"
+                                className="text-sm"
+                                disabled={!question.otherInput?.enabled}
+                              />
+                            </div>
+                            <div className="flex items-end gap-2">
+                              <input
+                                id={`other_req_${index}`}
+                                type="checkbox"
+                                checked={question.otherInput?.required !== false && !!question.otherInput?.enabled}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateQuestion(index, "otherInput", { ...(question.otherInput || {}), required: e.target.checked, enabled: question.otherInput?.enabled ?? true })}
+                                disabled={!question.otherInput?.enabled}
+                              />
+                              <Label htmlFor={`other_req_${index}`} className="text-sm">Обов'язкове при виборі</Label>
+                            </div>
+                          </div>
+                          <p className="text-xs text-muted-foreground">Підтримує тексти: "інше", "свій варіант" тощо.</p>
+                        </div>
                       </div>
                     )}
                   </div>

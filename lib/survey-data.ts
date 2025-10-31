@@ -8,6 +8,13 @@ export interface SurveyQuestion {
   required?: boolean
   showIfQuestionId?: string
   showIfValue?: string
+  // NEW: configuration for inline write-in answer ("інше/свій варіант")
+  otherInput?: {
+    enabled?: boolean
+    label?: string // how option is shown in list
+    placeholder?: string // input placeholder
+    required?: boolean // whether text is required if selected
+  }
 }
 
 export const surveyQuestions: SurveyQuestion[] = [
@@ -42,6 +49,7 @@ export const surveyQuestions: SurveyQuestion[] = [
       "свій варіант",
     ],
     required: true,
+    otherInput: { enabled: true, label: "свій варіант", placeholder: "Вкажіть інший розмір", required: true },
   },
   {
     id: "budget",
@@ -89,6 +97,7 @@ export const surveyQuestions: SurveyQuestion[] = [
     required: true,
     showIfQuestionId: "pain",
     showIfValue: "так",
+    otherInput: { enabled: true, label: "свій варіант", placeholder: "Опишіть, де саме болить", required: true },
   },
   { id: "pain_custom", question: "Опишіть конкретно свій біль або дискомфорт", type: "text", required: true, showIfQuestionId: "pain_area", showIfValue: "свій варіант" },
   { id: "health_issues", question: "Чи є у Вас проблеми зі здоров'ям, якщо так, то опишіть конкретно які", type: "text", required: false, showIfQuestionId: "audience", showIfValue: "Дорослий" },
@@ -101,6 +110,7 @@ export const surveyQuestions: SurveyQuestion[] = [
     required: true,
     showIfQuestionId: "audience",
     showIfValue: "Дорослий",
+    otherInput: { enabled: true, label: "інше (впишіть)", placeholder: "Вкажіть інший тип або назву", required: true },
   },
   { id: "current_mattress_name", question: "Якщо знаєте назву – впишіть", type: "text", required: false, showIfQuestionId: "current_mattress", showIfValue: "інше (впишіть)" },
 
@@ -119,6 +129,7 @@ export const surveyQuestions: SurveyQuestion[] = [
     required: true,
     showIfQuestionId: "audience",
     showIfValue: "Дорослий",
+    otherInput: { enabled: true, label: "свій варіант", placeholder: "Опишіть, що саме не влаштовує", required: true },
   },
   { 
     id: "dissatisfaction_custom", 
@@ -183,6 +194,7 @@ export const surveyQuestions: SurveyQuestion[] = [
     required: true,
     showIfQuestionId: "audience",
     showIfValue: "Дитина",
+    otherInput: { enabled: true, label: "інше (пропишіть)", placeholder: "Вкажіть діагноз", required: true },
   },
   { id: "child_health_other", question: "Вкажіть точний діагноз", type: "text", required: false, showIfQuestionId: "child_health", showIfValue: "інше (пропишіть)" },
   {
@@ -193,6 +205,7 @@ export const surveyQuestions: SurveyQuestion[] = [
     required: true,
     showIfQuestionId: "audience",
     showIfValue: "Дитина",
+    otherInput: { enabled: true, label: "інше (впишіть)", placeholder: "Вкажіть інший варіант", required: true },
   },
   { id: "child_current_name", question: "Назва/модель (за бажанням)", type: "text", required: false, showIfQuestionId: "audience", showIfValue: "Дитина" },
   {
@@ -203,6 +216,7 @@ export const surveyQuestions: SurveyQuestion[] = [
     required: true,
     showIfQuestionId: "audience",
     showIfValue: "Дитина",
+    otherInput: { enabled: true, label: "свій варіант", placeholder: "Опишіть проблему", required: true },
   },
   { 
     id: "child_dissatisfaction_custom", 

@@ -18,6 +18,13 @@ export async function GET() {
         next_question_logic: {},
         order_index: index + 1,
         required: q.required !== false,
+        // persist new otherInput configuration
+        other_input: q.otherInput ? {
+          enabled: !!q.otherInput.enabled,
+          label: q.otherInput.label || 'інше (впишіть)',
+          placeholder: q.otherInput.placeholder || 'Впишіть свій варіант',
+          required: q.otherInput.required !== false,
+        } : undefined,
         created_at: new Date(),
         updated_at: new Date()
       }))
@@ -28,7 +35,7 @@ export async function GET() {
       }
     }
 
-    const formattedQuestions = questions.map((q) => ({
+    const formattedQuestions = questions.map((q: any) => ({
       id: q.question_id,
       question: q.question_text,
       type: q.question_type === 'single' ? 'radio' : q.question_type,
@@ -36,6 +43,13 @@ export async function GET() {
       required: q.required !== false,
       showIfQuestionId: q.show_if_logic?.question_id || '',
       showIfValue: q.show_if_logic?.answer_value || '',
+      // expose for admin/editor
+      otherInput: q.other_input ? {
+        enabled: !!q.other_input.enabled,
+        label: q.other_input.label || 'інше (впишіть)',
+        placeholder: q.other_input.placeholder || 'Впишіть свій варіант',
+        required: q.other_input.required !== false,
+      } : undefined,
     }))
 
     return NextResponse.json(formattedQuestions)
@@ -50,6 +64,7 @@ export async function GET() {
         type: q.type,
         options: q.options || [],
         required: q.required !== false,
+        otherInput: q.otherInput,
       }))
       return NextResponse.json(fallback)
     } catch {
@@ -86,15 +101,26 @@ export async function POST(request: NextRequest) {
         let options: string[] | null = null
         if (type === 'radio' || type === 'select') {
           const source = Array.isArray(q.options) ? q.options : []
-          options = source.map((s: any) => String(s)).map(s => s.trim()).filter(Boolean)
+          options = source.map((s: any) => String(s)).map((s: string) => s.trim()).filter(Boolean)
         }
 
         let showIf = null as null | { question_id: string; answer_value: string }
-        const s = q.showIf
+        const s = (q.showIf || { }) as any
         if (s && typeof s === 'object' && s.questionId && s.value !== undefined) {
           showIf = { question_id: String(s.questionId).trim(), answer_value: String(s.value).trim() }
         } else if (q.showIfQuestionId && q.showIfValue) {
           showIf = { question_id: String(q.showIfQuestionId).trim(), answer_value: String(q.showIfValue).trim() }
+        }
+
+        // normalize otherInput config
+        let other_input: any = undefined
+        if (q.otherInput && typeof q.otherInput === 'object') {
+          other_input = {
+            enabled: !!q.otherInput.enabled,
+            label: String(q.otherInput.label || 'інше (впишіть)'),
+            placeholder: String(q.otherInput.placeholder || 'Впишіть свій варіант'),
+            required: q.otherInput.required !== false,
+          }
         }
 
         return {
@@ -104,6 +130,7 @@ export async function POST(request: NextRequest) {
           options,
           required: q.required !== false,
           show_if_logic: showIf,
+          other_input,
           next_question_logic: {},
           order_index: index + 1,
           created_at: new Date(),
